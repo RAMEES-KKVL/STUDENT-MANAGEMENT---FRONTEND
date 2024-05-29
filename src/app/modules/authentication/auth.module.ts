@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { SignupBody } from "./pages/signup/signup.component";
 import { AuthHeaderComponent } from "./components/auth-header/auth-header.component";
+import { AuthSubmitButtonComponent } from "./components/auth-submit-button/auth-submitButton.component";
 
 const routes: Routes = [
     {
@@ -13,7 +14,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         SignupBody,
-        AuthHeaderComponent
+        AuthHeaderComponent,
+        AuthSubmitButtonComponent
     ],
     imports: [
         RouterModule.forChild(routes)
