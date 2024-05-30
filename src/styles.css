@@ -10,3 +10,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .auth-bg{
     background-image: url("assets/images/auth_bgimage_book_lap.jpg");
 }
+
+/* Hide scrollbar */
+::-webkit-scrollbar{
+    display: none;
+}
+
+/* Hide the spinners in WebKit browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

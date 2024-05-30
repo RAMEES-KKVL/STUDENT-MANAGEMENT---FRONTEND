@@ -1,0 +1,63 @@
+<div class="w-full h-full bg-no-repeat bg-cover bg-fixed" [style.background-image]="'url(' + backgroundImage + ')'">
+    <auth-header-component></auth-header-component>
+    <div class="signup-Body">
+        <div class="w-[100%] h-[100%] flex items-center">
+            <div class="w-[35rem] h-[35rem] rounded-[.5rem] flex flex-col items-center justify-center border border-gray-500 overflow-hidden ml-[10%] mb-[5%]">
+                <div class="w-[80%] flex items-center justify-center flex-col">
+                    <div class="text-[2rem] w-full flex justify-center mb-2 text-auth_proceed_button_text">Register your account</div>
+                    <form action="" class="w-full flex flex-col items-center justify-center">
+                        <div class="flex flex-col w-[100%]">
+        
+                            <mat-form-field class="w-[100%]">
+                                <mat-label>Full Name</mat-label>
+                                <input type="text" matInput 
+                                    placeholder="Full Name"
+                                > 
+                            </mat-form-field>
+                            <mat-form-field class="">
+                                <mat-label>Email</mat-label>
+                                <input type="email" matInput 
+                                    placeholder="email@gmail.com"
+                                > 
+                            </mat-form-field>
+                            <mat-form-field class="">
+                                <mat-label>Phone</mat-label>
+                                <input type="number" matInput 
+                                    placeholder="Enter mobile number"
+                                > 
+                            </mat-form-field>
+                            <mat-form-field class="">
+                                <mat-label>Password</mat-label>
+                                <input type="password" matInput 
+                                    placeholder="Enter password"
+                                > 
+                            </mat-form-field>
+                            <mat-form-field class="">
+                                <mat-label>Confirm Password</mat-label>
+                                <input type="password" matInput 
+                                    placeholder="Re-enter password"
+                                > 
+                            </mat-form-field>
+                            
+                        </div>
+                        <div class="flex justify-between w-full items-center text-[1.1rem]">
+                            <div>
+                                <div>
+                                    <input type="checkbox">
+                                    Accept our <a href="" class="text-blue-800">terms and conditions</a>
+                                </div>
+                                <div class="ml-4">Already have an account? 
+                                    <a href="" class="text-auth_proceed_button_text focus: transition duration-200 ease-in-out active:scale-150">
+                                        Login
+                                    </a>
+                                </div>
+                            </div>
+                            <auth-submit-button-component submitButtonText="Submit"></auth-submit-button-component>
+                        </div>
+        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
