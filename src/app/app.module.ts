@@ -18,7 +18,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';  // mat form
     AppRoutingModule,
     BrowserAnimationsModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

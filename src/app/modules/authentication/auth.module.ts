@@ -5,6 +5,8 @@ import { AuthHeaderComponent } from "./components/auth-header/auth-header.compon
 import { AuthSubmitButtonComponent } from "./components/auth-submit-button/auth-submitButton.component";
 import { MatInputModule } from "@angular/material/input";
 import { LoginBody } from "./pages/login/login.component";
+import { OtpBody } from "./pages/otp/otp.component";
+import { FormsModule } from "@angular/forms";
 
 const routes: Routes = [
     {
@@ -14,19 +16,25 @@ const routes: Routes = [
     {
         path : "login",
         component : LoginBody
+    },
+    {
+        path : "otp-verification",
+        component : OtpBody
     }
 ]
 
 @NgModule({
     declarations: [
-        SignupBody,
         AuthHeaderComponent,
         AuthSubmitButtonComponent,
-        LoginBody
+        SignupBody,
+        LoginBody,
+        OtpBody
     ],
     imports: [
         RouterModule.forChild(routes),
-        MatInputModule
+        MatInputModule,
+        FormsModule
     ]
 })
 export class AuthModule {}

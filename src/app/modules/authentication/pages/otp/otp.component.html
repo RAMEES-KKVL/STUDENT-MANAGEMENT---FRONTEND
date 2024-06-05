@@ -1,0 +1,80 @@
+<div class="w-full h-full bg-no-repeat bg-cover bg-fixed" [style.background-image]="'url(' + backgroundImage + ')'">
+    <auth-header-component></auth-header-component>
+    <div class="otp-Body">
+        <div class="w-[100%] h-[100%] flex items-center">
+            <div class="w-[35rem] h-[auto] py-[3rem] rounded-[.5rem] flex flex-col items-center justify-center overflow-hidden ml-[10%] mb-[5%] backdrop-blur-3xl">
+                <div class="w-[80%] flex items-center justify-center flex-col">
+                    <div class="text-[2rem] w-full flex justify-center mb-7 text-auth_proceed_button_text">OTP Verification</div>
+                    <form action="" class="w-full flex flex-col items-center justify-center">
+                        <div class="flex gap-5 w-full justify-between">
+
+                            <!-- <input type="text" maxlength="1" class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl" #otpInputs>
+                            <input type="text" maxlength="1" class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl" #otpInputs>
+                            <input type="text" maxlength="1" class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl" #otpInputs>
+                            <input type="text" maxlength="1" class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl" #otpInputs> -->
+
+                            <input 
+                                [(ngModel)]="otpInput1"
+                                name="otpInput1"
+                                type="text" 
+                                maxlength="1" 
+                                #otpInput1Ref 
+                                (input)="onInput($event, 1)" 
+                                (keyup)="onkeyup($event, 1)"
+                                (click)="selectInput($event, 1)"
+                                class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl"
+                            >
+                            <input 
+                                [(ngModel)]="otpInput2"
+                                name="otpInput2"
+                                type="text" 
+                                maxlength="1" 
+                                #otpInput2Ref
+                                (input)="onInput($event, 2)"
+                                (keyup)="onkeyup($event, 2)"
+                                (click)="selectInput($event, 2)"
+                                class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl"
+                            >
+                            <input 
+                                [(ngModel)]="otpInput3"
+                                name="otpInput3"
+                                type="text" 
+                                maxlength="1" 
+                                #otpInput3Ref
+                                (input)="onInput($event, 3)" 
+                                (keyup)="onkeyup($event, 3)"
+                                (click)="selectInput($event, 3)"
+                                class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl"
+                            >
+                            <input 
+                                [(ngModel)]="otpInput4"
+                                name="otpInput4"
+                                type="text" 
+                                maxlength="1" 
+                                #otpInput4Ref
+                                (input)="onInput($event, 4)"
+                                (keyup)="onkeyup($event, 4)" 
+                                (click)="selectInput($event, 4)"
+                                class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl"
+                            >
+                            
+                        </div>
+                        <div class="flex justify-between w-full items-center text-[1.1rem] mt-7">
+                            <div>
+                                <div>
+                                    <a href="#" class="hover:text-red-700">
+                                        Resend OTP
+                                    </a>
+                                </div>
+                            </div>
+                            <auth-submit-button-component submitButtonText="Log In"></auth-submit-button-component>
+                        </div>
+        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
