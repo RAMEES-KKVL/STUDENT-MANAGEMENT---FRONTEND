@@ -5,13 +5,11 @@
             <div class="w-[35rem] h-[auto] py-[3rem] rounded-[.5rem] flex flex-col items-center justify-center overflow-hidden ml-[10%] mb-[5%] backdrop-blur-3xl">
                 <div class="w-[80%] flex items-center justify-center flex-col">
                     <div class="text-[2rem] w-full flex justify-center mb-7 text-auth_proceed_button_text">OTP Verification</div>
+                    <div class="mb-5">
+                        We've sent a 4-digit verification code to your email address: example@gmail.com.
+                    </div>
                     <form action="" class="w-full flex flex-col items-center justify-center">
                         <div class="flex gap-5 w-full justify-between">
-
-                            <!-- <input type="text" maxlength="1" class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl" #otpInputs>
-                            <input type="text" maxlength="1" class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl" #otpInputs>
-                            <input type="text" maxlength="1" class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl" #otpInputs>
-                            <input type="text" maxlength="1" class="w-[3.7rem] h-[3.7rem] rounded-[.7rem] outline-none text-center text-2xl" #otpInputs> -->
 
                             <input 
                                 [(ngModel)]="otpInput1"
@@ -67,7 +65,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <auth-submit-button-component submitButtonText="Log In"></auth-submit-button-component>
+                            <auth-submit-button-component submitButtonText="Submit"></auth-submit-button-component>
                         </div>
         
                     </form>

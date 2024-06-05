@@ -7,6 +7,7 @@ import { MatInputModule } from "@angular/material/input";
 import { LoginBody } from "./pages/login/login.component";
 import { OtpBody } from "./pages/otp/otp.component";
 import { FormsModule } from "@angular/forms";
+import { SecretKeyBody } from "./pages/admin-secretKey/secretKey.component";
 
 const routes: Routes = [
     {
@@ -20,6 +21,10 @@ const routes: Routes = [
     {
         path : "otp-verification",
         component : OtpBody
+    },
+    {
+        path : "secret_key-verification",
+        component : SecretKeyBody
     }
 ]
 
@@ -29,7 +34,8 @@ const routes: Routes = [
         AuthSubmitButtonComponent,
         SignupBody,
         LoginBody,
-        OtpBody
+        OtpBody,
+        SecretKeyBody
     ],
     imports: [
         RouterModule.forChild(routes),

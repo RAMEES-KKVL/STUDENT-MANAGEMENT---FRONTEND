@@ -22,27 +22,29 @@ export class OtpBody implements AfterViewInit {
 
     ngAfterViewInit(): void {
         if( this.otpInput1Ref ){
-            this.otpInput1Ref.nativeElement.focus();            
+            // Focus the first input field when the OTP page renders
+            this.otpInput1Ref.nativeElement.focus();          
         }   
     }
     
+    // Handling input event
     onInput(event: Event, index: number): void {
         const target = event.target as HTMLInputElement
         
-        if(!target){
-
-        } else {
-            if (target.value.length >= 1 && index < 4) {
-                const nextInput = (this as any)["otpInput" + (index + 1) + "Ref"].nativeElement
-                if(nextInput.value){
-                    nextInput.select()
-                }
-                nextInput.focus()
+        if(target.value.length >= 1 && index < 4) {
+            // Setting input name which we want to focus next
+            const nextInput = (this as any)["otpInput" + (index + 1) + "Ref"].nativeElement
+            if(nextInput.value){
+                // Select the value of the next input if it already has a value
+                nextInput.select()
             }
+            // Focuses next input filed 
+            nextInput.focus()
         }
         this.preventEvent = true
     }
 
+    // Handling backspace action
     onkeyup(event: KeyboardEvent, index: number): void {
         const target = event.target as HTMLInputElement
         
@@ -57,11 +59,11 @@ export class OtpBody implements AfterViewInit {
 
     }
 
+    // Handling input selection event
     selectInput(event: any, index: any){
         const prevInput = (this as any)["otpInput" + index + "Ref"].nativeElement;
         prevInput.select();
     }
-
 }
                 
 
