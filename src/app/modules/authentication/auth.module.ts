@@ -8,6 +8,8 @@ import { LoginBody } from "./pages/login/login.component";
 import { OtpBody } from "./pages/otp/otp.component";
 import { FormsModule } from "@angular/forms";
 import { SecretKeyBody } from "./pages/admin-secretKey/secretKey.component";
+import { ForgetPasswordBody } from "./pages/forget-password/forgetPassword.component";
+import { ResetPasswordBody } from "./pages/reset-password/resetPassword.component";
 
 const routes: Routes = [
     {
@@ -25,6 +27,14 @@ const routes: Routes = [
     {
         path : "secret_key-verification",
         component : SecretKeyBody
+    },
+    {
+        path : "forget_password",
+        component : ForgetPasswordBody
+    },
+    {
+        path : "reset_password",
+        component : ResetPasswordBody
     }
 ]
 
@@ -35,7 +45,9 @@ const routes: Routes = [
         SignupBody,
         LoginBody,
         OtpBody,
-        SecretKeyBody
+        SecretKeyBody,
+        ForgetPasswordBody,
+        ResetPasswordBody
     ],
     imports: [
         RouterModule.forChild(routes),
