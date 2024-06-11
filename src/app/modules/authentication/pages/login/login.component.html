@@ -5,19 +5,44 @@
             <div class="w-[35rem] h-[auto] py-[3rem] rounded-[.5rem] flex flex-col items-center justify-center overflow-hidden ml-[10%] mb-[5%] backdrop-blur-3xl">
                 <div class="w-[80%] flex items-center justify-center flex-col">
                     <div class="text-[2rem] w-full flex justify-center mb-7 text-auth_proceed_button_text">Log In</div>
-                    <form action="" class="w-full flex flex-col items-center justify-center">
+                    <form 
+                        [formGroup]="loginForm"
+                        novalidate
+                        class="w-full flex flex-col items-center justify-center"
+                    >
                         <div class="flex flex-col w-[100%]">
         
+                            <div class="text-red-900" *ngIf="emailError && emailTouched">
+                                Please provide your email.
+                            </div>
+                            <div class="text-red-900" *ngIf="emailErrorPattern && emailTouched">
+                                Please enter a valid email address.
+                            </div>
                             <mat-form-field class="">
                                 <mat-label>Email</mat-label>
-                                <input type="email" matInput 
+                                <input 
+                                    type="email" 
+                                    matInput 
                                     placeholder="email@gmail.com"
+                                    formControlName="email"
+                                    (blur)="onEmailChange($event)"
                                 > 
                             </mat-form-field>
+
+                            <div class="text-red-900" *ngIf="passwordError && passwordTouched">
+                                Please enter password
+                            </div>
+                            <div class="text-red-900" *ngIf="passwordErrorPattern && passwordTouched">
+                                The password you entered is not valid. Please try again.
+                            </div>
                             <mat-form-field class="">
                                 <mat-label>Password</mat-label>
-                                <input type="password" matInput 
-                                    placeholder="Enter password"
+                                <input 
+                                    type="password" 
+                                    matInput 
+                                    placeholder="Password"
+                                    formControlName="password"
+                                    (blur)="onPasswordChange($event)"
                                 > 
                             </mat-form-field>
                             

@@ -17,7 +17,7 @@ export class SignupBody {
             fullName: ["", Validators.required],
             email: ["", [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
             phone: ["", Validators.compose([Validators.required, Validators.pattern(/^\d{10}$/)])],
-            password: ["", Validators.compose([Validators.required, Validators.pattern(/^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8}$/)])],
+            password: ["", Validators.compose([Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}$/)])],
             confirmPassword: ["", Validators.required, this.passwordMatchValidator()]
         })
     }
