@@ -6,10 +6,11 @@ import { AuthSubmitButtonComponent } from "./components/auth-submit-button/auth-
 import { MatInputModule } from "@angular/material/input";
 import { LoginBody } from "./pages/login/login.component";
 import { OtpBody } from "./pages/otp/otp.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SecretKeyBody } from "./pages/admin-secretKey/secretKey.component";
 import { ForgetPasswordBody } from "./pages/forget-password/forgetPassword.component";
 import { ResetPasswordBody } from "./pages/reset-password/resetPassword.component";
+import { CommonModule } from "@angular/common";
 
 const routes: Routes = [
     {
@@ -52,7 +53,9 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
         MatInputModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule
     ]
 })
 export class AuthModule {}

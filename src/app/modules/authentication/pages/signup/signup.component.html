@@ -5,40 +5,109 @@
             <div class="w-[35rem] h-[auto] py-[2rem] rounded-[.5rem] flex flex-col items-center justify-center overflow-hidden ml-[10%] mb-[5%] backdrop-blur-3xl">
                 <div class="w-[80%] flex items-center justify-center flex-col">
                     <div class="text-[2rem] w-full flex justify-center mb-7 text-auth_proceed_button_text">Register your account</div>
-                    <form action="" class="w-full flex flex-col items-center justify-center">
-                        <div class="flex flex-col w-[100%]">
-        
+                    <form
+                        [formGroup]="signupForm"
+                        (ngSubmit)="onSubmit()"
+                        novalidate 
+                        class="w-full flex flex-col items-center justify-center"
+                    >
+                        <div class="flex flex-col w-[100%]"> 
+                            
+                            <div class="text-red-900" *ngIf="fullNameError && fullNameTouched">
+                                Please enter your full name.
+                            </div>
                             <mat-form-field class="w-[100%]">
-                                <mat-label>Full Name</mat-label>
-                                <input type="text" matInput 
+                                <mat-label>
+                                    Full Name
+                                </mat-label>
+                                <input 
+                                    type="text" 
+                                    matInput 
                                     placeholder="Full Name"
+                                    formControlName="fullName"
+                                    (blur)="onFullNameChange($event)"
                                 > 
                             </mat-form-field>
-                            <mat-form-field class="">
-                                <mat-label>Email</mat-label>
-                                <input type="email" matInput 
+
+                            <div class="text-red-900" *ngIf="emailError && emailTouched">
+                                Please provide your email.
+                            </div>
+                            <div class="text-red-900" *ngIf="emailErrorPattern && emailTouched">
+                                Please enter a valid email address.
+                            </div>
+                            <mat-form-field class="">   
+                                <mat-label>
+                                    Email
+                                </mat-label>
+                                <input 
+                                    type="email" 
+                                    matInput 
                                     placeholder="email@gmail.com"
+                                    formControlName="email"
+                                    (blur)="onEmailChange($event)"
                                 > 
                             </mat-form-field>
+
+                            <div class="text-red-900" *ngIf="phoneError && phoneTouched">
+                                Please enter mobile number
+                            </div>
+                            <div class="text-red-900" *ngIf="phoneErrorPattern && phoneTouched">
+                                Please provide a valid mobile number
+                            </div>
                             <mat-form-field class="">
-                                <mat-label>Phone</mat-label>
-                                <input type="number" matInput 
+                                <mat-label>
+                                    Phone
+                                </mat-label>
+                                <input 
+                                    type="number" 
+                                    matInput 
                                     placeholder="Enter mobile number"
+                                    formControlName="phone"
+                                    (blur)="onPhoneChange($event)"
                                 > 
                             </mat-form-field>
+
+                            <div class="text-red-900" *ngIf="passwordError && passwordTouched">
+                                Please enter password
+                            </div>
+                            <div class="text-red-900" *ngIf="passwordErrorPattern && passwordTouched">
+                                Please provide a valid password
+                            </div>
                             <mat-form-field class="">
-                                <mat-label>Password</mat-label>
-                                <input type="password" matInput 
+                                <mat-label>
+                                    Password
+                                </mat-label>
+                                <input 
+                                    type="password" 
+                                    matInput 
                                     placeholder="Enter password"
+                                    formControlName="password"
+                                    (blur)="onPasswordChange($event)"
                                 > 
                             </mat-form-field>
+
+                            <div class="text-red-900" *ngIf="confirmPassError && confirmPassTouched">
+                                Confirm Password is required
+                            </div>
+                            <div class="text-red-900" *ngIf="confirmPassPattern && confirmPassTouched">
+                                Passwords do not match. Please re-enter your password
+                            </div>
                             <mat-form-field class="">
-                                <mat-label>Confirm Password</mat-label>
-                                <input type="password" matInput 
+                                <mat-label>
+                                    Confirm Password
+                                </mat-label>
+                                <input 
+                                    type="password" 
+                                    matInput
                                     placeholder="Re-enter password"
+                                    formControlName="confirmPassword"
+                                    (blur)="onConfirmPasswordChange($event)"
                                 > 
                             </mat-form-field>
                             
+                        </div>
+                        <div class="w-full">
+                            <div class="text-red-900 mb-1">{{ errorMessage }}</div>
                         </div>
                         <div class="flex justify-between w-full items-center text-[1.1rem]">
                             <div>
@@ -52,7 +121,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <auth-submit-button-component submitButtonText="Submit"></auth-submit-button-component>
+                            <auth-submit-button-component submitButtonText="Submit" ></auth-submit-button-component>
                         </div>
         
                     </form>

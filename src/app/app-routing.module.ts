@@ -8,7 +8,7 @@ const routes: Routes = [
     component : HomepageBody
   },
   {
-    path : "",
+    path : "auth",
     loadChildren: () => import("./modules/authentication/auth.module").then( m => m.AuthModule)
   }
 ];
