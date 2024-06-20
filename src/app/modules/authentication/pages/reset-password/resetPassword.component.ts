@@ -22,6 +22,7 @@ export class ResetPasswordBody {
     passwordError: boolean = false
     passwordTouched: boolean = false
     passwordErrorPattern: boolean | undefined = false
+    regexError: string = ""
 
     onPasswordChange(event: Event){
         const target = event.target as HTMLInputElement
@@ -30,6 +31,10 @@ export class ResetPasswordBody {
 
         if(target.value){
             this.passwordErrorPattern = this.resetPassForm.get('password')?.hasError('pattern')
+            if(this.passwordErrorPattern){
+                const providedPassword = target.value
+                this.checkPassword(providedPassword)
+            }
         }
 
         setTimeout(()=>{
@@ -37,6 +42,33 @@ export class ResetPasswordBody {
             this.passwordTouched = false
             this.passwordErrorPattern = false
         }, 3000)
+    }
+
+    // Validates password against complexity requirements 
+    checkPassword(password: string){
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}$/
+        if (!regex.test(password)) {
+            // Check for missing lowercase letter
+            if (!/[a-z]/.test(password)) {
+              this.regexError = "Password must contain at least one lowercase letter (a-z)."
+              return
+            }
+            // Check for missing uppercase letter
+            if (!/[A-Z]/.test(password)) {
+              this.regexError = "Password must contain at least one uppercase letter (A-Z)."
+              return
+            }
+            // Check for missing digit
+            if (!/\d/.test(password)) {
+              this.regexError = "Password must contain at least one digit (0-9)."
+              return
+            }
+            // Check for insufficient length
+            if (password.length < 8) {
+              this.regexError = "Password must be at least 8 characters long."
+              return
+            }
+        }
     }
 
     // Validating Confirm password input

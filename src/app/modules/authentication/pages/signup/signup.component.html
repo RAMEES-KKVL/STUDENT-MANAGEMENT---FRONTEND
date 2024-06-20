@@ -26,6 +26,7 @@
                                     placeholder="Full Name"
                                     formControlName="fullName"
                                     (blur)="onFullNameChange($event)"
+                                    [ngModel]="demoName"
                                 > 
                             </mat-form-field>
 
@@ -45,6 +46,7 @@
                                     placeholder="email@gmail.com"
                                     formControlName="email"
                                     (blur)="onEmailChange($event)"
+                                    [ngModel]="demoEmail"
                                 > 
                             </mat-form-field>
 
@@ -64,6 +66,7 @@
                                     placeholder="Enter mobile number"
                                     formControlName="phone"
                                     (blur)="onPhoneChange($event)"
+                                    [ngModel]="demoPhone"
                                 > 
                             </mat-form-field>
 
@@ -71,9 +74,9 @@
                                 Please enter password
                             </div>
                             <div class="text-red-900" *ngIf="passwordErrorPattern && passwordTouched">
-                                The password you entered is not valid. Please try again.
+                                {{ regexError }}
                             </div>
-                            <mat-form-field class="">
+                            <mat-form-field>
                                 <mat-label>
                                     Password
                                 </mat-label>
@@ -83,6 +86,7 @@
                                     placeholder="Enter password"
                                     formControlName="password"
                                     (blur)="onPasswordChange($event)"
+                                    [ngModel]="demoPassword"
                                 > 
                             </mat-form-field>
 
@@ -92,7 +96,7 @@
                             <div class="text-red-900" *ngIf="confirmPassPattern && confirmPassTouched">
                                 Passwords do not match. Please re-enter your password
                             </div>
-                            <mat-form-field class="">
+                            <mat-form-field>
                                 <mat-label>
                                     Confirm Password
                                 </mat-label>
@@ -102,6 +106,7 @@
                                     placeholder="Re-enter password"
                                     formControlName="confirmPassword"
                                     (blur)="onConfirmPasswordChange($event)"
+                                    [ngModel]="demoPassword"
                                 > 
                             </mat-form-field>
                             

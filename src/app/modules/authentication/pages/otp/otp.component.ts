@@ -56,7 +56,6 @@ export class OtpBody implements AfterViewInit {
             prevInput.focus()
         }
         this.preventEvent = false
-
     }
 
     // Handling input selection event

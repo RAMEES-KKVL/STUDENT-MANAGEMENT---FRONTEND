@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
     selector : "auth-signup-body",
@@ -8,11 +10,15 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/f
 })
 export class SignupBody {
     backgroundImage = 'assets/images/auth_bgimage_book_lap.jpg'
+    demoName: string = "Ramees"
+    demoEmail: string = "rameesp41750@gmail.com"
+    demoPhone:string = "9745701592"
+    demoPassword:string = "Ramees@2"    
 
     // Creating form and validating input fields
     errorMessage:string = ""
     signupForm: FormGroup
-    constructor(private fb: FormBuilder){
+    constructor(private fb: FormBuilder, private userService: UserService, private route: Router){
         this.signupForm = this.fb.group({
             fullName: ["", Validators.required],
             email: ["", [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
@@ -82,6 +88,7 @@ export class SignupBody {
     passwordError: boolean = false
     passwordTouched: boolean = false
     passwordErrorPattern: boolean | undefined = false
+    regexError: string = ""
 
     onPasswordChange(event: Event){
         const target = event.target as HTMLInputElement
@@ -90,6 +97,10 @@ export class SignupBody {
 
         if(target.value){
             this.passwordErrorPattern = this.signupForm.get('password')?.hasError('pattern')
+            if(this.passwordErrorPattern){
+                const providedPassword = target.value                
+                this.checkPassword(providedPassword)
+            }
         }
 
         setTimeout(()=>{
@@ -97,6 +108,33 @@ export class SignupBody {
             this.passwordTouched = false
             this.passwordErrorPattern = false
         }, 3000)
+    }
+    
+    // Validates password against complexity requirements 
+    checkPassword(password: string){
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}$/
+        if (!regex.test(password)) {
+            // Check for missing lowercase letter
+            if (!/[a-z]/.test(password)) {
+              this.regexError = "Password must contain at least one lowercase letter (a-z)."
+              return
+            }
+            // Check for missing uppercase letter
+            if (!/[A-Z]/.test(password)) {
+              this.regexError = "Password must contain at least one uppercase letter (A-Z)."
+              return
+            }
+            // Check for missing digit
+            if (!/\d/.test(password)) {
+              this.regexError = "Password must contain at least one digit (0-9)."
+              return
+            }
+            // Check for insufficient length
+            if (password.length < 8) {
+              this.regexError = "Password must be at least 8 characters long."
+              return
+            }
+        }
     }
 
     // Validating Confirm password input
@@ -133,7 +171,28 @@ export class SignupBody {
     }
 
     // Handling form submission 
-    onSubmit(){
+    datas: any
+    onSubmit(){        
+        this.datas = this.signupForm.value
         
+        this.userService.signup(this.datas).subscribe({
+            next: ( response: object | any )=>{
+
+                // Handling success responses
+                if ( response.success ) {
+                    this.route.navigate(["/auth/otp-verification"])
+                }
+            },
+            error: ( response: object | any )=>{
+                
+                // Handling error responses
+                if ( !response.success ) {
+                    this.errorMessage = response.error.message
+                    setTimeout(()=>{
+                        this.errorMessage = ""
+                    }, 3000)
+                }                
+            }
+        })
     }
 }

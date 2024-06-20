@@ -11,6 +11,8 @@ import { SecretKeyBody } from "./pages/admin-secretKey/secretKey.component";
 import { ForgetPasswordBody } from "./pages/forget-password/forgetPassword.component";
 import { ResetPasswordBody } from "./pages/reset-password/resetPassword.component";
 import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { UserService } from "src/app/services/user.service";
 
 const routes: Routes = [
     {
@@ -48,14 +50,20 @@ const routes: Routes = [
         OtpBody,
         SecretKeyBody,
         ForgetPasswordBody,
-        ResetPasswordBody
+        ResetPasswordBody,
+        
     ],
     imports: [
         RouterModule.forChild(routes),
         MatInputModule,
         FormsModule,
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        HttpClientModule,
+        
+    ],
+    providers: [
+        UserService
     ]
 })
 export class AuthModule {}
