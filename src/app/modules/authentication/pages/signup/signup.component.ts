@@ -170,21 +170,21 @@ export class SignupBody {
         return null
     }
 
-    // Handling form submission 
+    // Handling registration form submission 
     datas: any
     onSubmit(){        
         this.datas = this.signupForm.value
         
         this.userService.signup(this.datas).subscribe({
-            next: ( response: object | any )=>{
 
+            // Handling backend responses
+            next: ( response: object | any )=>{
                 // Handling success responses
                 if ( response.success ) {
                     this.route.navigate(["/auth/otp-verification"])
                 }
             },
             error: ( response: object | any )=>{
-                
                 // Handling error responses
                 if ( !response.success ) {
                     this.errorMessage = response.error.message

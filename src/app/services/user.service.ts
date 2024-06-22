@@ -11,4 +11,8 @@ export class UserService {
     signup(data: any){        
         return this.http.post(`${Environment.url}/auth/signup`, data)
     }
+
+    login(data: any){
+        return this.http.post(`${Environment.url}/auth/login`, data)
+    }
 } 

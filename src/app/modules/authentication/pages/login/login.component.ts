@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
     selector : "auth-login-body",
@@ -11,7 +13,7 @@ export class LoginBody {
 
     // Creating form and validating input fields
     loginForm: FormGroup
-    constructor(private fb: FormBuilder){
+    constructor( private fb: FormBuilder, private userService: UserService, private route: Router ){
         this.loginForm = this.fb.group({
             email: ["", Validators.compose([Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)])],
                 password: ["", Validators.compose([Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}$/)])]
@@ -93,4 +95,35 @@ export class LoginBody {
         }
     }
 
+    // Handling login form submission
+    datas: any
+    errorMessage: string = ""
+    onSubmit(){
+        this.datas = this.loginForm.value
+
+        this.userService.login(this.datas).subscribe({
+
+            // Handling backend responses 
+            next: (response: object | any )=>{
+                // Handling success responses 
+                if ( response.success ) {
+                    if ( response.user ){
+                        localStorage.setItem("token", response.token)
+                        this.route.navigate(["/"])
+                    } else if ( response.notVerified ) {
+                        this.route.navigate(["/auth/otp-verification"])
+                    }
+                }
+            },
+            error: ( response: object | any )=>{
+                // Handling error responses 
+                if ( !response.success ){
+                    this.errorMessage = response.error.message
+                    setTimeout(()=>{
+                        this.errorMessage = ""
+                    }, 3000)
+                }
+            }
+        })
+    }
 }
