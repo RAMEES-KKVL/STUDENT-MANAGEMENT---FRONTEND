@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Observable } from "rxjs";
 import { UserService } from "src/app/services/user.service";
 
 @Component({
@@ -9,6 +10,7 @@ import { UserService } from "src/app/services/user.service";
     styleUrls : ["./signup.component.css"]
 })
 export class SignupBody {
+
     backgroundImage = 'assets/images/auth_bgimage_book_lap.jpg'
     demoName: string = "Ramees"
     demoEmail: string = "rameesp41750@gmail.com"
@@ -196,3 +198,7 @@ export class SignupBody {
         })
     }
 }
+
+
+
+

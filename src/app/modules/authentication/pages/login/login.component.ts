@@ -16,7 +16,7 @@ export class LoginBody {
     constructor( private fb: FormBuilder, private userService: UserService, private route: Router ){
         this.loginForm = this.fb.group({
             email: ["", Validators.compose([Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)])],
-                password: ["", Validators.compose([Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}$/)])]
+            password: ["", Validators.compose([Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}$/)])]
         })
     }
 
@@ -48,14 +48,14 @@ export class LoginBody {
     passwordErrorPattern: boolean | undefined = false
     regexError: string = ""
 
-    onPasswordChange(event: Event){
+    onPasswordChange( event: Event ){
         const target = event.target as HTMLInputElement
         this.passwordTouched = true
         this.passwordError = target.value ? false : true
 
-        if(target.value){
+        if( target.value ){
             this.passwordErrorPattern = this.loginForm.get('password')?.hasError('pattern')
-            if(this.passwordErrorPattern){
+            if( this.passwordErrorPattern ){
                 const providedPassword = target.value
                 this.checkPassword(providedPassword)
             }
