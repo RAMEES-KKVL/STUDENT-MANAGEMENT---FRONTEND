@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';   // mat form componen
 import { MatFormFieldModule } from '@angular/material/form-field';  // mat form 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor.service';
+import { SharedModule } from './modules/sharedmodules/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AuthInterceptor } from './services/auth.interceptor.service';
     MatInputModule,
     MatFormFieldModule,
     HttpClientModule,
+    SharedModule
   ],
   providers: [
     {

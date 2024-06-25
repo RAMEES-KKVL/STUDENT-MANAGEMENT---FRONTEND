@@ -6,4 +6,10 @@ import { Component, Input } from "@angular/core";
 })
 export class AuthSubmitButtonComponent {
     @Input() submitButtonText: string = ""
+    @Input() notValid: boolean = false
+    
+    ngOnChange(){
+        this.notValid = this.notValid
+    }
+
 }

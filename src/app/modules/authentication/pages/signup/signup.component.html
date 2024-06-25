@@ -121,12 +121,12 @@
                                     Accept our <a href="" class="text-blue-800">terms and conditions</a>
                                 </div>
                                 <div class="ml-4">Already have an account? 
-                                    <a href="" class="text-auth_proceed_button_text focus: transition duration-200 ease-in-out active:scale-150">
+                                    <a href="/auth/login" class="text-auth_proceed_button_text focus: transition duration-200 ease-in-out active:scale-150">
                                         Login
                                     </a>
                                 </div>
                             </div>
-                            <auth-submit-button-component submitButtonText="Submit" ></auth-submit-button-component>
+                            <auth-submit-button-component submitButtonText="Submit" [notValid]="signupForm.invalid"></auth-submit-button-component>
                         </div>
         
                     </form>

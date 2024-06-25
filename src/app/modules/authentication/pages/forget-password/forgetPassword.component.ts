@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
     selector : "auth-forgetPassword-body",
@@ -9,9 +11,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class ForgetPasswordBody {
     backgroundImage = 'assets/images/auth_bgimage_book_lap.jpg'
 
-    // Creating form and validating input fields
     forgetPassForm: FormGroup
-    constructor(private fb: FormBuilder){
+    // Creating form and validating input fields
+    constructor( private fb: FormBuilder, private userService: UserService, private route: Router ){
         this.forgetPassForm = this.fb.group({
             email: ["", [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
         })
@@ -36,5 +38,30 @@ export class ForgetPasswordBody {
             this.emailError = false
             this.emailErrorPattern = false
         }, 3000);
+    }
+
+    datas: any
+    errorMessage: string = ""
+    onSubmit(){
+        this.datas = this.forgetPassForm.value
+
+        this.userService.forgetPass(this.datas).subscribe({
+            // Handling backend responses
+            next: ( response: object | any )=>{
+                // Handling success responses
+                if ( response.success ) {
+                    this.route.navigate(["/auth/reset_password"])
+                }
+            },
+            error: ( response: object | any )=>{
+                // Handling error responses
+                if ( !response.success ) {
+                    this.errorMessage = response.error.message
+                    setTimeout(()=>{
+                        this.errorMessage = ""
+                    }, 3000)
+                }                
+            }
+        })
     }
 }

@@ -26,4 +26,18 @@ export class UserService {
     otp(data: object){        
         return this.http.post(`${Environment.url}/auth/otp-verification`, data)
     }
+
+    forgetPass(data: object){
+        return this.http.post(`${Environment.url}/auth/forget_password`, data).pipe(
+            map((response: any)=>{
+                this.emailService.setUserId(response.email)
+                return response
+            })
+        )  
+    }
+
+    resetPass(data: object){
+        return this.http.post(`${Environment.url}/auth/reset_password`, data)
+    }
 } 
+

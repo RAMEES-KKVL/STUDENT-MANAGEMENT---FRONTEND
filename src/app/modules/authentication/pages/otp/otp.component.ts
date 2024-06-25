@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { EmailService } from "src/app/services/email.service";
 import { UserService } from "src/app/services/user.service";
+import Swal from "sweetalert2";
 
 @Component({
     selector : "auth-otp-body",
@@ -138,7 +139,9 @@ export class OtpBody implements AfterViewInit, OnInit {
                     next: ( response: any )=>{
                         // Handling success response 
                         if ( response.success ) {
-                            this.route.navigate(["/auth/login"])
+                            Swal.fire("Registrantion completed successfully").then(()=>{
+                                this.route.navigate(["/auth/login"])
+                            })
                         }
                     },
                     error: ( response: any )=>{
@@ -161,4 +164,4 @@ export class OtpBody implements AfterViewInit, OnInit {
 
 
 
-
+        

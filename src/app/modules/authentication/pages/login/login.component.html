@@ -54,17 +54,17 @@
                         <div class="flex justify-between w-full items-center text-[1.1rem] text-auth_proceed_button_text">
                             <div>
                                 <div>
-                                    <a href="#" class="hover:text-red-700">
+                                    <a href="/auth/forget_password" class="hover:text-red-700">
                                         Forgot password...?
                                     </a>
                                 </div>
                                 <div class="text-black">Don't have an account? 
-                                    <a href="#" class="text-auth_proceed_button_text">
+                                    <a href="/auth/signup" class="text-auth_proceed_button_text">
                                         Register
                                     </a>
                                 </div>
                             </div>
-                            <auth-submit-button-component submitButtonText="Log In"></auth-submit-button-component>
+                            <auth-submit-button-component submitButtonText="Log In" [notValid]="loginForm.invalid"></auth-submit-button-component>
                         </div>
         
                     </form>
