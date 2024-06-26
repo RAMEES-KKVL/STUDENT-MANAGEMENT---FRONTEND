@@ -11,10 +11,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';  // mat form
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor.service';
 import { SharedModule } from './modules/sharedmodules/shared.module';
+import { HomepageBody } from './home/home.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomepageBody
   ],
   imports: [
     BrowserModule,

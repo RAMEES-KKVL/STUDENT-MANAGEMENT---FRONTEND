@@ -125,7 +125,6 @@ export class ResetPasswordBody implements OnInit {
     datas: any
     onSubmit(){
         this.datas = this.resetPassForm.value
-        const isEmailExist = this.resetPassForm
 
         this.userService.resetPass(this.datas).subscribe({
             // Handling backend response
@@ -139,13 +138,11 @@ export class ResetPasswordBody implements OnInit {
             },
             error : (response : any)=>{
                 // Handling error response
-                console.log(response);
                 
                 if ( !response.error.success && response.error.missingEmail ) {
                     Swal.fire("Provide email once again")
                     setTimeout(()=>{
                         this.route.navigate(["/auth/forget_password"])
-
                     }, 3000)
                 } else {
                     this.errorMessage = response.error.message
