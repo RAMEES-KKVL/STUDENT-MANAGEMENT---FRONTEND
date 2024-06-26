@@ -41,7 +41,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-
-/home-footer
-homeFooter.component.html
-homeFooter.component.ts
