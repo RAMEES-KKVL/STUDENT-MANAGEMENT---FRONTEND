@@ -14,13 +14,15 @@ import { SharedModule } from './modules/sharedmodules/shared.module';
 import { HomepageBody } from './home/home.component';
 import { HomeBannerComponent } from './home/components/home-banner/homeBanner.component';
 import { CourseComponent } from './home/components/courses/courses.component';
+import { InstructorsComponent } from './home/components/instructors/instructors.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageBody,
     HomeBannerComponent,
-    CourseComponent
+    CourseComponent,
+    InstructorsComponent
   ],
   imports: [
     BrowserModule,
