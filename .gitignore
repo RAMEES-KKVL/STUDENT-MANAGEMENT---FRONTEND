@@ -41,3 +41,10 @@ testem.log
 .DS_Store
 Thumbs.db
 
+/src/app/home/components/home-banner
+homeBanner.component.html
+homeBanner.component.ts
+
+/src/app/home/components/instructors
+instructors.component.html
+instructors.component.ts

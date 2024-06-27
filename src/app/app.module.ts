@@ -12,11 +12,15 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor.service';
 import { SharedModule } from './modules/sharedmodules/shared.module';
 import { HomepageBody } from './home/home.component';
+import { HomeBannerComponent } from './home/components/home-banner/homeBanner.component';
+import { CourseComponent } from './home/components/courses/courses.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomepageBody
+    HomepageBody,
+    HomeBannerComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule,
