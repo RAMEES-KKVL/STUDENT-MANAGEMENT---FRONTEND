@@ -4,4 +4,12 @@ import { Component } from "@angular/core";
     selector : "app-home-header",
     templateUrl : "./homeHeader.component.html"
 })
-export class HomeHeaderComponent {}
+export class HomeHeaderComponent {
+    showMenuFlag: boolean = false
+
+
+
+    showMenu () {
+        this.showMenuFlag = !this.showMenuFlag
+    }
+}

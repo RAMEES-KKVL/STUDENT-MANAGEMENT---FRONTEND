@@ -15,6 +15,7 @@ import { HomepageBody } from './home/home.component';
 import { HomeBannerComponent } from './home/components/home-banner/homeBanner.component';
 import { CourseComponent } from './home/components/courses/courses.component';
 import { InstructorsComponent } from './home/components/instructors/instructors.component';
+import { LandingHomePage } from './home/pages/landing-home/landinghome.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { InstructorsComponent } from './home/components/instructors/instructors.
     HomepageBody,
     HomeBannerComponent,
     CourseComponent,
-    InstructorsComponent
+    InstructorsComponent,
+    LandingHomePage
   ],
   imports: [
     BrowserModule,
