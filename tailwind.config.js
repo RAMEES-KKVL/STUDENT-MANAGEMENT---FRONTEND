@@ -1,3 +1,5 @@
+const { max } = require('rxjs');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -47,6 +49,12 @@ module.exports = {
         "lg" : "1004px",
         "xl" : "1138px",
         "2xl" : "1536px",
+        "xs_max" : { max : "390px" },
+        "sm_max" : { max : "640px" },
+        "md_max" : { max : "868px" },
+        "lg_max" : { max : "1004px" },
+        "xl_max" : { max : "1138px" },
+        "2xl_max" : { max : "1536px" }
       },
       fontFamily : {
         defaultFont :['Roboto Mono'],

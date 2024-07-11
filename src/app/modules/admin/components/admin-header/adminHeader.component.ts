@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 
 @Component({
-    selector : "admin-sidebar-component",
-    templateUrl : "./adminSidebar.component.html"
-}) 
-export class AdminSidebarComponent {
-  
+    selector : "admin-header-component",
+    templateUrl : "./adminHeader.component.html"
+})
+export class AdminHeaderComponent {
+    showMenu: boolean = false
+
     sidebarList: sidebarItem[] = [
         {
             listName :  "Admins",
@@ -28,7 +29,10 @@ export class AdminSidebarComponent {
             icon : "fa-solid fa-bell"
         },
     ]
-    showMenu: boolean = false
+
+    showMenubar(){
+        this.showMenu = !this.showMenu
+    }
 }
 
 interface sidebarItem {

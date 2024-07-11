@@ -1,36 +1,13 @@
-<div class="w-full flex justify-between items-center h-auto bg-slate-200 p-4">
-    <button class="border border-gray-700 px-3 py-1 active:scale-[0.95] transition ease-in-out duration-100 sm:hidden rounded-[4px] hover:bg-gray-600 hover:text-gray-200 text-gray-700" (click)="showMenubar()">
-        <i [ngClass]="showMenu ? 'fa-solid fa-x' : 'fa-solid fa-bars'"></i>
-    </button>
-    <div class="flex items-center">
-        <img src="/assets/images/EduSync-logo.png" alt="" class="w-8 pr-1">
-        EduSync
-    </div>
-    <button class="border border-gray-700 px-3 py-1 active:scale-[0.98] transition ease-in-out duration-100 rounded-[4px] hover:bg-gray-600 hover:text-gray-200 text-gray-700">
-        <i class="fa-solid fa-right-from-bracket"></i>
-    </button>
-</div>
 
-<!-- Code for Small Screen -->
-<div class="w-full h-auto sm:hidden" *ngIf="showMenu" >
-    <div class="px-5 py-4 gap-5 flex border hover:bg-gray-200 hover:text-black active:scale-[0.99] transition ease-in-out duration-150 overflow-auto" *ngFor="let item of sidebarList">
-        <div>
-            <i [class]="item.icon"></i>
-        </div>
-        <div class="">
-            {{ item.listName }}
-        </div>
-    </div>
-</div>
 <!-- --------------------------------------------------- -->
 
-<!-- <div class="flex"> -->
-    <div class="hidden sm:block w-[12rem] xl:w-[14rem]">
-        <div class="h-auto px-5 xl:px-6 py-4 xl:py-5 gap-5 flex border hover:bg-gray-200 hover:text-black active:scale-[0.99] transition ease-in-out duration-150 overflow-x-auto" *ngFor="let item of sidebarList">
+<!-- <div class="flex w-[12rem] xl:w-[14rem]"> -->
+    <div class="hidden sm:block h-full w-auto p-10">
+        <div class="h-auto w-fullpy-4 sm:px-6 sm:py-5 gap-5 flex items-center justify-center hover:bg-gray-200 hover:text-black active:scale-[0.99] rounded-2xl transition ease-in-out duration-150 overflow-x-auto" *ngFor="let item of sidebarList">
             <div class="flex items-center justify-center">
-                <i [class]="item.icon"></i>
+                <i class="text-lg" [class]="item.icon"></i>
             </div>
-            <div class="">
+            <div class="text-lg">
                 {{ item.listName }}
             </div>
         </div>

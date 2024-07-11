@@ -9,7 +9,7 @@ const routes: Routes = [
     component : HomepageBody,
     children: [
       {
-        path: "",
+        path: "", 
         component: LandingHomePage
       }
     ]
