@@ -1,4 +1,5 @@
 const { max } = require('rxjs');
+const { transform } = require('typescript');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -56,9 +57,23 @@ module.exports = {
         "xl_max" : { max : "1138px" },
         "2xl_max" : { max : "1536px" }
       },
-      fontFamily : {
+      fontFamily: {
         defaultFont :['Roboto Mono'],
         inter : ["Inter"]
+      },
+      keyFrames: {
+        fadeIn: {
+          "0%" : { opacity: "0", transform : "scale(0.95" },
+          "100%" : { opacity : "1", transform : "scale(1)" }
+        },
+        fadeOut: {
+          "0%" : { opacity : "1", transform : "scale(1)" },
+          "100%" : { opacity : "0", transform : "scale(0.95)" }
+        }
+      },
+      animation: {
+        fadeIn: "fadeIn 1s ease-in-out",
+        fadeOut: "fadeOut 1s ease-in" 
       }
     },
   },
