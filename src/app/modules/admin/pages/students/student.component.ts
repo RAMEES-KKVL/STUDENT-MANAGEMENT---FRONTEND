@@ -6,11 +6,6 @@ import { Component } from "@angular/core";
     styleUrls : ["./student.component.css"]
 })
 export class AdminStudentsPage {
-    onPageChange(event: any){}
-    first: number = 1
-    rows: number = 2
-    totalRecords: string = ""
-    rowsPerPageOptions: number[] = []
 
     showPopup: boolean = false
     togglePopup(){

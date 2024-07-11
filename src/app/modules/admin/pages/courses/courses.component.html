@@ -1,6 +1,6 @@
 <div class="w-full h-full overflow-auto">
     <div class="w-full h-[4rem] px-5 flex items-center justify-between">
-        <div class="text-xl">STUDENTS</div>
+        <div class="text-xl">COURSES</div>
         <button (click)="togglePopup()" class="bg-slate-300 rounded-lg px-5 py-1.5 hover:bg-slate-400 transition active:scale-95 ease-in-out">
             <i class="fa-solid fa-plus"></i>
         </button>
@@ -13,24 +13,19 @@
                 <!-- TAB SIZE VIEW -->
                 <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden">
                     <!-- STUDENT DETAILS -->
-                    <div class="flex flex-col">
+                    <div class="flex flex-col overflow-scroll">
                         <div class="flex gap-3">
-                            <div>Name</div>
+                            <div>Course Name</div>
                             <div>:</div>
                             <div>Demo</div>
                         </div>
-                        <div class="flex gap-3">
-                            <div>Email</div>
+                        <div class="flex gap-3 overflow-scroll">
+                            <div>Description</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div class="overflow-scroll truncate-description">Demo</div>
                         </div>
                         <div class="flex gap-3">
-                            <div>Course</div>
-                            <div>:</div>
-                            <div>Demo</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div>Batch</div>
+                            <div>Duration</div>
                             <div>:</div>
                             <div>Demo</div>
                         </div>
@@ -60,10 +55,9 @@
                 <div class="hidden md:block">
                     <!-- HEADING ROW  -->
                     <div class="flex mb-2 ">
-                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Name</div>
-                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Email</div>
-                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Course</div>
-                        <div class="w-1/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Batch</div>
+                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Course Name</div>
+                        <div class="w-3/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Description</div>
+                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Duration</div>
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">CreatedAt</div>
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">UpdatedAt</div>
                         <div class="w-1/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Action</div>
@@ -71,10 +65,9 @@
 
                     <!-- DETAILS ROW -->
                     <div class="flex">
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">Ramees</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">rameesp@gamil.com</div>
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">MEAN</div>
-                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto">AFDY</div>
+                        <div class="w-3/12 border border-gray-300 px-2 py-1 overflow-auto truncate-description">Trending course with lot of opportunities</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">12 weeks</div>
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">DATE</div>
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">DATE</div>
                         <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto flex">
@@ -99,10 +92,10 @@
 </div>
 
 <!-- POPUP DIV FOR ADDING NEW STUDENTS -->
-<div *ngIf="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+<div *ngIf="!showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"> -->
     <div [ngClass]="{ 'animate-fadeIn' : showPopup, 'animate-fadeOut' : !showPopup }" class="bg-white p-5 rounded-lg shadow-lg w-1/2 xl_max:w-60% h-auto max-h-[80%] overflow-auto md_max:w-[85%] sm_max:w-full">
         <div class="flex justify-between items-center mb-5">
-            <h2 class="text-xl">Add New Student</h2>
+            <h2 class="text-xl">Add New Course</h2>
             <button (click)="togglePopup()" class="text-gray-500 hover:text-gray-700 text-xl">
                 <i class="fa-solid fa-times"></i>
             </button>
@@ -110,32 +103,16 @@
         <form>
 
             <div class="mb-4">
-                <label class="block text-gray-700 pl-1">Full Name</label>
+                <label class="block text-gray-700 pl-1">Course Name</label>
                 <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 pl-1">Email</label>
-                <input type="email" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 pl-1">Phone</label>
+                <label class="block text-gray-700 pl-1">Description</label>
                 <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 pl-1">Course</label>
-                <select name="" id="" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-3 px-3 outline-none">
-                    <option value="" selected disabled class="">Choose Course</option>
-                    <option value="">Course 1</option>
-                    <option value="">Course 2</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 pl-1">Batch</label>
-                <select name="" id="" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-3 px-3 outline-none">
-                    <option value="" selected disabled class="">Choose Batch</option>
-                    <option value="">Batch 1</option>
-                    <option value="">Batch 2</option>
-                </select>
+                <label class="block text-gray-700 pl-1">Duration</label>
+                <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
             </div>
 
             <div class="flex justify-end">
@@ -144,4 +121,4 @@
 
         </form>
     </div>
-</div> 
+</div>
