@@ -10,6 +10,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { MatInputModule } from "@angular/material/input";
 import { PaginationComponent } from "./components/pagination/pagination.component";
 import { AdminCoursePage } from "./pages/courses/courses.component";
+import { AdminAddCoursePage } from "./pages/add-course/adminAddCourse.component";
 
 const routes: Routes = [
     {
@@ -22,7 +23,11 @@ const routes: Routes = [
             },
             {
                 path : "courses",
-                component : AdminCoursePage
+                component : AdminCoursePage,
+            },
+            {
+                path : "add-course",
+                component : AdminAddCoursePage
             }
         ]
     }
@@ -35,7 +40,8 @@ const routes: Routes = [
         AdminHeaderComponent,
         AdminPages,
         PaginationComponent,
-        AdminCoursePage
+        AdminCoursePage,
+        AdminAddCoursePage
     ],
     imports: [
         RouterModule.forChild(routes),

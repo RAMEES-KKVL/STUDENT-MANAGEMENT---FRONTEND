@@ -74,7 +74,13 @@ module.exports = {
       animation: {
         fadeIn: "fadeIn 1s ease-in-out",
         fadeOut: "fadeOut 1s ease-in" 
-      }
+      },
+      borderWidth: {
+        "1.7" : "1.7px"
+      },
+      boxShadow:{
+        a1:'0 0 10px rgba(0, 0, 0 , 0.5)'
+      },
     },
   },
   plugins: [],
