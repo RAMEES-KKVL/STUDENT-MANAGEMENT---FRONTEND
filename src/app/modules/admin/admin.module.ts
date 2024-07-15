@@ -11,6 +11,8 @@ import { MatInputModule } from "@angular/material/input";
 import { PaginationComponent } from "./components/pagination/pagination.component";
 import { AdminCoursePage } from "./pages/courses/courses.component";
 import { AdminAddCoursePage } from "./pages/add-course/adminAddCourse.component";
+import { AdminBatchPage } from "./pages/batches/batches.component";
+import { AdminsPageBody } from "./pages/admins/admins.component";
 
 const routes: Routes = [
     {
@@ -28,6 +30,14 @@ const routes: Routes = [
             {
                 path : "add-course",
                 component : AdminAddCoursePage
+            },
+            {
+                path : "batches",
+                component : AdminBatchPage
+            },
+            {
+                path : "admins",
+                component : AdminsPageBody
             }
         ]
     }
@@ -41,7 +51,9 @@ const routes: Routes = [
         AdminPages,
         PaginationComponent,
         AdminCoursePage,
-        AdminAddCoursePage
+        AdminAddCoursePage,
+        AdminBatchPage,
+        AdminsPageBody
     ],
     imports: [
         RouterModule.forChild(routes),

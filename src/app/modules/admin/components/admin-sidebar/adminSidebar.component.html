@@ -3,7 +3,7 @@
 
 <!-- <div class="flex w-[12rem] xl:w-[14rem]"> -->
     <div class="hidden sm:block h-full w-auto p-10">
-        <div class="h-auto w-fullpy-4 sm:px-6 sm:py-5 gap-5 flex items-center justify-center hover:bg-gray-200 hover:text-black active:scale-[0.99] rounded-2xl transition ease-in-out duration-150 overflow-x-auto" *ngFor="let item of sidebarList">
+        <div class="h-auto w-fullpy-4 sm:px-6 sm:py-5 gap-5 flex items-center justify-center hover:bg-gray-200 hover:text-black active:scale-[0.99] rounded-2xl transition ease-in-out duration-150 overflow-x-auto" *ngFor="let item of sidebarList" (click)="routeNavigator(item.url)">
             <div class="flex items-center justify-center">
                 <i class="text-lg" [class]="item.icon"></i>
             </div>
