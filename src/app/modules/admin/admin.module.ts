@@ -3,7 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AdminStudentsPage } from "./pages/students/student.component";
 import { AdminSidebarComponent } from "./components/admin-sidebar/adminSidebar.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { AdminHeaderComponent } from "./components/admin-header/adminHeader.component";
 import { AdminPages } from "./pages/admin-pages/adminPages.component";
 import { PaginatorModule } from 'primeng/paginator';
@@ -61,10 +61,13 @@ const routes: Routes = [
         CommonModule,
         PaginatorModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
     ],
     exports: [
         AdminSidebarComponent
+    ],
+    providers: [
+        DatePipe
     ]
 })
 export class AdminModules {}

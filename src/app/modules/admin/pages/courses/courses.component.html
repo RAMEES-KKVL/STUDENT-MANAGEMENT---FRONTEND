@@ -11,39 +11,39 @@
             <div class="h-auto p-3 flex flex-col gap-2">
 
                 <!-- TAB SIZE VIEW -->
-                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden">
+                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden" *ngFor="let course of courseList">
                     <!-- COURSE DETAILS -->
                     <div class="flex flex-col overflow-scroll">
                         <div class="flex gap-3">
                             <div>Course Name</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ course.courseName }}</div>
                         </div>
                         <div class="flex gap-3 overflow-scroll">
                             <div>Description</div>
                             <div>:</div>
-                            <div class="overflow-scroll truncate-description">Trending course with lot of opportunities</div>
+                            <div class="overflow-scroll truncate-description">{{ course.description }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>Duration</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ course.duration }} {{ course.durationUnit }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>CreatedAt</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ course.formattedCreatedAt }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>UpdatedAt</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ course.formattedUpdatedAt }}</div>
                         </div>
                     </div>
                     <!-- ACTION BUTTONS -->
                     <div class="p-3 flex flex-col items-center justify-center gap-5 border-l">
                         <button class="hover:border hover:border-gray-400 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
-                            <i class="fa-solid fa-user-pen"></i>
+                            <i class="fa-solid fa-file-pen"></i> 
                         </button>
                         <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                             <i class="fa-solid fa-trash text-red-800"></i>
@@ -54,7 +54,7 @@
                 <!-- LAPTOP SIZE VIEW -->
                 <div class="hidden md:block">
                     <!-- HEADING ROW  -->
-                    <div class="flex mb-2 ">
+                    <div class="flex mb-2 sticky top-0 bg-white">
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Course Name</div>
                         <div class="w-3/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Description</div>
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Duration</div>
@@ -64,15 +64,15 @@
                     </div>
 
                     <!-- DETAILS ROW -->
-                    <div class="flex">
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">MEAN</div>
-                        <div class="w-3/12 border border-gray-300 px-2 py-1 overflow-auto truncate-description">Trending course with lot of opportunities</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">12 weeks</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">DATE</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">DATE</div>
+                    <div class="flex" *ngFor="let course of courseList">
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ course.courseName }}</div>
+                        <div class="w-3/12 border border-gray-300 px-2 py-1 overflow-auto truncate-description">{{ course.description }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ course.duration }} {{ course.durationUnit }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ course.formattedCreatedAt }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ course.formattedUpdatedAt }}</div>
                         <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto flex">
                             <button class="hover:border hover:border-gray-400 px-2 py-1 rounded-lg active:scale-95 transition ease-in-out">
-                                <i class="fa-solid fa-user-pen"></i>
+                                <i class="fa-solid fa-file-pen"></i>
                             </button>
                             <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                                 <i class="fa-solid fa-trash text-red-800"></i>
@@ -100,22 +100,66 @@
                 <i class="fa-solid fa-times"></i>
             </button>
         </div>
-        <form>
+        <form 
+            [formGroup]="courseCreationForm"
+            (ngSubmit)="onSubmit()"
+            novalidate
+        >
 
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Course Name</label>
-                <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
+                <div class="text-red-900 pl-1" *ngIf="nameError && nameTouched">
+                    Please enter Course Name.
+                </div>
+                <input 
+                    type="text"
+                    formControlName="courseName" 
+                    (blur)="onNameChange($event)"
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Description</label>
-                <textarea type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none"></textarea>
+                <div class="text-red-900 pl-1" *ngIf="descriptionError && descriptionTouched">
+                    Please provide course description.
+                </div>
+                <textarea 
+                    type="text" 
+                    formControlName="description"
+                    (blur)="onDescriptionChange($event)"
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none"
+                ></textarea>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Duration</label>
-                <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
+                <div class="text-red-900 pl-1" *ngIf="durationError && durationTouched">
+                    Please provide course duration.
+                </div>
+                <div class="text-red-900 pl-1" *ngIf="showError && ((courseCreationForm.get('duration')?.invalid && courseCreationForm.get('duration')?.touched) || (courseCreationForm.get('durationUnit')?.invalid && courseCreationForm.get('durationUnit')?.touched))">
+                    Please provide valid duration and duration unit.
+                </div>
+                <div class="flex">
+                    <input 
+                        type="number" 
+                        (blur)="onDurationChange($event)"
+                        formControlName="duration"
+                        class="mt-1 w-1/2 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                    />
+                    <select 
+                        formControlName="durationUnit"
+                        required 
+                        class="mt-1 w-1/2 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none"
+                    >
+                        <option value="" selected disabled>Choose duration</option>
+                        <option *ngFor="let unit of durationUnits" [value]="unit.value">
+                            {{ unit.label }}
+                        </option>
+                    </select>
+                </div>
             </div>
 
-            <div class="flex justify-end">
+            <div class="flex justify-between">
+                <div class="text-red-900 ml-1">{{ errorMessage }}</div>
                 <button type="submit" class="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 transition ease-in-out active:scale-95">Create</button>
             </div>
 

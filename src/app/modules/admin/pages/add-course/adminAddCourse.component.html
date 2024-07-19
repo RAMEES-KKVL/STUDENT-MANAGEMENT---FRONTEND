@@ -1,225 +1,121 @@
-<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div class="w-[70%] h-[80%] bg-white rounded-lg shadow-lg p-7">
-
-        <div class="h-2/6 w-full overflow-auto text-black flex flex-col gap-2">
-            <div class="flex items-center">
-                <div class="w-[7rem]">
-                    Course Name
+<form
+    #addCourseForm="ngForm"
+    (ngSubmit)="onSubmit(addCourseForm)"
+    novalidate
+>
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="w-[70%] h-[80%] bg-white rounded-lg shadow-lg p-7">
+            <div class="h-2/6 w-full overflow-auto text-black flex flex-col gap-2">
+                <div class="text-red-900" *ngIf="nameError && nameTouched">
+                    Please enter Course Name.
                 </div>
-                <div class="flex items-center gap-2" style="width: calc(100% - 7rem);">
-                    : <input type="text" placeholder="MEAN" class="w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-1 px-3 outline-none" />
-                </div>
-            </div> 
-            <div class="flex items-center">
-                <div class="w-[7rem]">
-                    Description
-                </div>
-                <div class="flex items-center gap-2" style="width: calc(100% - 7rem);">
-                    : <textarea type="text" placeholder="Trending course with lot of opportunities" class="w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-1 px-3 outline-none"></textarea>
-                </div>
-            </div> 
-            <div class="flex items-center">
-                <div class="w-[7rem]">
-                    Duration
-                </div>
-                <div class="flex items-center gap-2" style="width: calc(100% - 7rem);">
-                    : <input type="text" placeholder="12 months" class="w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-1 px-3 outline-none" />
-                </div>
-            </div> 
-        </div>
-
-        <div class="h-[60%] w-full overflow-auto py-2">
-
-            <div class="sticky -top-5 py-2 text-lg bg-white w-full">
-                Topics
-            </div>
-            <div class="w-full overflow-auto">
-                <label class="block text-gray-700 pl-1">Week 1</label>
-                <div class="w-full flex gap-2 overflow-auto mb-1"> 
-                    <!-- INPUT FOR ADDING NEW TOPICS -->
-                    <input type="text" placeholder="Topics" class="mt-1 w-1/3 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none md:w-2/5" />
-                    <div class="w-2/3 flex overflow-x-scroll md:w-3/5">
-                        <!-- DIV FOR SHOWING ADDED TOPICS -->
-                        <div class="flex gap-1">
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
+                <div class="flex items-center">
+                    <div class="w-[7rem]">
+                        Course Name
                     </div>
-                </div>
-            </div>
-            <div class="w-full overflow-auto">
-                <label class="block text-gray-700 pl-1">Week 2</label>
-                <div class="w-full flex gap-2 overflow-auto mb-1"> 
-                    <!-- INPUT FOR ADDING NEW TOPICS -->
-                    <input type="text" placeholder="Topics" class="mt-1 w-1/3 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none md:w-2/5" />
-                    <div class="w-2/3 flex overflow-x-scroll md:w-3/5">
-                        <!-- DIV FOR SHOWING ADDED TOPICS -->
-                        <div class="flex gap-1">
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="flex items-center gap-2" style="width: calc(100% - 7rem);">
+                        :   <input 
+                                type="text" 
+                                [(ngModel)]="courseInfo.courseName"
+                                name="courseName"
+                                (blur)="onNameChange($event)"
+                                required
+                                class="w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-1 px-3 outline-none" 
+                            >
                     </div>
+                </div> 
+                <div class="text-red-900" *ngIf="descriptionError && descriptionTouched">
+                    Please provide course description.
                 </div>
-            </div>
-            <div class="w-full overflow-auto">
-                <label class="block text-gray-700 pl-1">Week 3</label>
-                <div class="w-full flex gap-2 overflow-auto mb-1"> 
-                    <!-- INPUT FOR ADDING NEW TOPICS -->
-                    <input type="text" placeholder="Topics" class="mt-1 w-1/3 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none md:w-2/5" />
-                    <div class="w-2/3 flex overflow-x-scroll md:w-3/5">
-                        <!-- DIV FOR SHOWING ADDED TOPICS -->
-                        <div class="flex gap-1">
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
+                <div class="flex items-center">
+                    <div class="w-[7rem]">
+                        Description
                     </div>
-                </div>
-            </div>
-            <div class="w-full overflow-auto">
-                <label class="block text-gray-700 pl-1">Week 4</label>
-                <div class="w-full flex gap-2 overflow-auto mb-1"> 
-                    <!-- INPUT FOR ADDING NEW TOPICS -->
-                    <input type="text" placeholder="Topics" class="mt-1 w-1/3 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none md:w-2/5" />
-                    <div class="w-2/3 flex overflow-x-scroll md:w-3/5">
-                        <!-- DIV FOR SHOWING ADDED TOPICS -->
-                        <div class="flex gap-1">
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="flex items-center gap-2" style="width: calc(100% - 7rem);">
+                        :   <textarea 
+                                type="text"  
+                                [(ngModel)]="courseInfo.description"
+                                name="description"
+                                (blur)="onDescriptionChange($event)"
+                                required
+                                class="w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-1 px-3 outline-none"
+                            ></textarea>
                     </div>
+                </div> 
+                <div class="text-red-900" *ngIf="durationError && durationTouched">
+                    Please provide course duration.
                 </div>
-            </div>
-            <div class="w-full overflow-auto">
-                <label class="block text-gray-700 pl-1">Week 5</label>
-                <div class="w-full flex gap-2 overflow-auto mb-1"> 
-                    <!-- INPUT FOR ADDING NEW TOPICS -->
-                    <input type="text" placeholder="Topics" class="mt-1 w-1/3 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none md:w-2/5" />
-                    <div class="w-2/3 flex overflow-x-scroll md:w-3/5">
-                        <!-- DIV FOR SHOWING ADDED TOPICS -->
-                        <div class="flex gap-1">
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
-                                content
-                                <button class="text-gray-500 hover:text-gray-700 ml-1">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
+                <div class="flex items-center">
+                    <div class="w-[7rem]">
+                        Duration
                     </div>
-                </div>
+                    <div class="flex items-center gap-2" style="width: calc(100% - 7rem);">
+                        :   <input 
+                                type="text" 
+                                [(ngModel)]="courseInfo.duration"
+                                name="duration" 
+                                (blur)="onDurationChange($event)"
+                                required
+                                class="w-1/2 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-1 px-3 outline-none" 
+                            />
+                            <select 
+                                required 
+                                class="mt-1 w-1/2 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none"
+                            >
+                                <option *ngFor="let unit of durationUnits" [value]="unit.value" [selected]="unit.value === courseInfo.durationUnit">
+                                    {{ unit.label }}
+                                </option>
+                            </select>
+                    </div>
+                </div> 
             </div>
 
-        </div>
-        <div class="mt-1 flex items-center justify-end">
-            <button type="submit" class="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 transition ease-in-out active:scale-95">Create</button>
+            <div class="h-[60%] w-full overflow-auto py-2">
+
+                <div class="sticky -top-5 py-2 text-lg bg-white w-full">
+                    Topics
+                </div>
+                <div *ngFor="let label of getDurationLabels()" class="w-full overflow-auto">
+                    <label class="block text-gray-700 pl-1">{{ label }}</label>
+                    <div class="w-full flex gap-2 overflow-auto mb-1"> 
+                        <!-- INPUT FOR ADDING NEW TOPICS -->
+                        <input 
+                            type="text" 
+                            placeholder="Topics" 
+                            #input1
+                            required
+                            (keydown)="addTopic($event, label)"
+                            class="mt-1 w-1/3 bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none md:w-2/5" 
+                        />
+                        <div class="w-2/3 flex overflow-x-scroll md:w-3/5" *ngIf="(courseInfo.topics?.[label]?.length ?? 0) > 0 ">
+                            <!-- DIV FOR SHOWING ADDED TOPICS -->
+                            <div class="flex gap-1">
+                                <div *ngFor="let topic of courseInfo.topics?.[label] ?? []" class="overflow-x-scroll whitespace-nowrap max-w-[7rem] border border-gray-400 py-1 px-3 mt-1 rounded-3xl flex items-center text-ellipsis">
+                                    <div class="text-sm text-gray-700">
+                                        {{ topic }}
+                                    </div>
+                                    <button class="text-gray-500 hover:text-gray-700 ml-1" (click)="removeTopic(label, topic)">
+                                        <i class="fa-solid fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="mt-1 flex items-center justify-between">
+                <div class="text-red-900">{{ topicErrorMessage }}</div>
+                <button 
+                    type="submit" 
+                    class="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 transition ease-in-out active:scale-95"
+                >
+                    Create
+                </button>
+            </div>
         </div>
     </div>
-</div>
+</form>
 
 
 
