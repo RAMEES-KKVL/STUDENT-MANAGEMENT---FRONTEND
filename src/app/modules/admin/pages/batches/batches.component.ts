@@ -14,6 +14,11 @@ export class AdminBatchPage implements OnInit {
     showPopup: boolean = false
     togglePopup(){
         this.showPopup = !this.showPopup
+        this.batchCreationForm.patchValue({
+            batchName : "",
+            startingDate: ""
+        })
+        this.isEditMode = false;
     }
 
     batchCreationForm: FormGroup
@@ -33,6 +38,7 @@ export class AdminBatchPage implements OnInit {
                 // Handling success responses 
                 if ( response.success ) {
                     this.batchList = response.batchList.map((batch: batchInterface) => ({
+                        _id : batch._id,
                         batchName: batch.batchName,
                         strength: batch.strength,
                         startingDate: this.getFormattedDate(batch.startingDate),
@@ -85,29 +91,108 @@ export class AdminBatchPage implements OnInit {
         }, 3000);
     }
 
+    // Function for edit batch details
+    isEditMode: boolean = false
+    batchId: string = ""
+    selectedBatch: batchInterface | null = null
+    editBatch(selectedBatchName: string, id: string) {
+        this.batchId = id        
+        this.selectedBatch = this.batchList.find( batch => batch.batchName === selectedBatchName)
+        if ( this.selectedBatch ) {
+            // Adding values to the input fields
+            this.batchCreationForm.patchValue({
+                batchName : this.selectedBatch.batchName,
+                startingDate: this.datePipe.transform(this.selectedBatch.startingDate, 'yyyy-MM-dd')
+            })
+            this.isEditMode = true;
+            this.showPopup = true;
+        }
+    }
+
+    // Function for deleting batch
+    deleteBatch(batchName: string) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This process is irreversible.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, go ahead.',
+            cancelButtonText: 'No, let me think',
+        }).then((result) => {
+            if (result.value) {
+                this.adminService.deleteBatch(batchName).subscribe({
+                    next: ( response: any )=>{
+                        if ( response.success ) {
+                            // Removing the deleted batch from the list
+                            this.batchList = this.batchList.filter( batch => batch.batchName !== batchName )
+                            Swal.fire('Removed!', 'Product removed successfully.', 'success');
+                        }
+                    },
+                    error: ( response: any )=>{
+                        Swal.fire("Failed to delete")
+                    }
+                })
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire('Cancelled', 'Product still in our database', 'error');
+            }
+        });
+    }
+
     errorMessage: string = ""
     onSubmit(){
-        this.adminService.addBatch(this.batchCreationForm.value).subscribe({
-            // Handling backend responses 
-            next: ( response: any )=>{
-                // Handling success responses 
-                if ( response.success ) {
-                    this.showPopup = false
-                    const createdBatch = response.createdBatch
-                    createdBatch.startingDate = this.getFormattedDate(createdBatch.startingDate)
-                    createdBatch.createdAt = this.getFormattedDate(createdBatch.createdAt)
-                    createdBatch.updatedAt = this.getFormattedDate(createdBatch.updatedAt)
-                    this.batchList.push(createdBatch)
-                    Swal.fire("Batch created successfully")
+        if ( this.isEditMode ) {
+            // Updating batch details
+            this.adminService.editBatch(this.batchCreationForm.value, this.batchId).subscribe({
+                // Handling backend responses 
+                next: ( response: any )=>{
+                    // Handling success responses 
+                    if ( response.success ) {
+                        this.showPopup = false
+                        const updatedBatch = response.updatedBatch
+                        updatedBatch.startingDate = this.getFormattedDate(updatedBatch.startingDate)
+                        updatedBatch.createdAt = this.getFormattedDate(updatedBatch.createdAt)
+                        updatedBatch.updatedAt = this.getFormattedDate(updatedBatch.updatedAt)
+
+                        // Replacing updated batch details 
+                        const index = this.batchList.findIndex( batch => batch._id === this.batchId )
+                        if ( index !== -1 ) {
+                            this.batchList[index] = updatedBatch
+                        }
+                        this.isEditMode = false
+                        Swal.fire("Batch details updated successfully")
+                    }
+                },
+                error: ( response: any )=>{
+                    // Handling error responses
+                    this.errorMessage = response.error.message
+                    setTimeout(() => {
+                        this.errorMessage = ""
+                    }, 3000);
                 }
-            },
-            error: ( response: any )=>{
-                // Handling error responses
-                this.errorMessage = response.error.message
-                setTimeout(() => {
-                    this.errorMessage = ""
-                }, 3000);
-            }
-        })
+            })
+        } else {
+            this.adminService.addBatch(this.batchCreationForm.value).subscribe({
+                // Handling backend responses 
+                next: ( response: any )=>{
+                    // Handling success responses 
+                    if ( response.success ) {
+                        this.showPopup = false
+                        const createdBatch = response.createdBatch
+                        createdBatch.startingDate = this.getFormattedDate(createdBatch.startingDate)
+                        createdBatch.createdAt = this.getFormattedDate(createdBatch.createdAt)
+                        createdBatch.updatedAt = this.getFormattedDate(createdBatch.updatedAt)
+                        this.batchList.push(createdBatch)
+                        Swal.fire("Batch created successfully")
+                    }
+                },
+                error: ( response: any )=>{
+                    // Handling error responses
+                    this.errorMessage = response.error.message
+                    setTimeout(() => {
+                        this.errorMessage = ""
+                    }, 3000);
+                }
+            })
+        }
     }
 }

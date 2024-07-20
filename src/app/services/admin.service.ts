@@ -35,4 +35,12 @@ export class AdminService {
     addBatch(data: object){
         return this.http.post(`${Environment.url}/admin/add-batch`, data)
     }
+
+    editBatch(data: object, batchId: string){
+        return this.http.patch(`${Environment.url}/admin/edit-batch?batchId=${batchId}`, data)
+    }
+
+    deleteBatch(batchName: string){
+        return this.http.delete(`${Environment.url}/admin/delete-batch?batchName=${batchName}`)
+    }
 }
