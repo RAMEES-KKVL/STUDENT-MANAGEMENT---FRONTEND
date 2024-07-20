@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { courseInterface } from "src/app/models/course.interface";
 import { courseDurationUnit } from "src/app/models/duration";
 import { AdminService } from "src/app/services/admin.service";
+import Swal from "sweetalert2";
 
 @Component({
     selector : "admin-courses-body",
@@ -114,6 +115,40 @@ export class AdminCoursePage implements OnInit {
         }, 3000);
     }
 
+    // Function for navigate to edit course section
+    editCourse( coursename: string ) {
+        this.route.navigate(["/admin/add-course"], { queryParams: { coursename, message : "Course updated successfully" }})
+    }
+
+    // Function for deleting course
+    deleteCourse(courseName: string) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This process is irreversible.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, go ahead.',
+            cancelButtonText: 'No, let me think',
+        }).then((result) => {
+            if (result.value) {
+                this.adminService.deleteCourse(courseName).subscribe({
+                    next: ( response: any )=>{
+                        if ( response.success ) {
+                            // Removing the deleted course from the list
+                            this.courseList = this.courseList.filter( course => course.courseName !== courseName )
+                            Swal.fire('Removed!', 'Product removed successfully.', 'success');
+                        }
+                    },
+                    error: ( response: any )=>{
+                        Swal.fire("Failed to delete")
+                    }
+                })
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire('Cancelled', 'Product still in our database', 'error');
+            }
+        }); 
+    }
+
     // Handling course form submission
     datas: any
     errorMessage: string = ""
@@ -127,7 +162,7 @@ export class AdminCoursePage implements OnInit {
                     // Handling success responses 
                     if ( response.success ) {
                         const coursename = response.courseName
-                        this.route.navigate(["/admin/add-course"], { queryParams: { coursename }})
+                        this.route.navigate(["/admin/add-course"], { queryParams: { coursename, message : "Course added successfully" }})
                     }
                 },
                 error: ( response: any )=>{

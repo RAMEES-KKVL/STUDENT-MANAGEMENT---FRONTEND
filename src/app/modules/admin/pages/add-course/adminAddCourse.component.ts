@@ -25,9 +25,13 @@ export class AdminAddCoursePage implements OnInit {
         updatedAt: 0,
         topics: {}
     }
+    successMessage: string = ""
     ngOnInit(): void {
         // Subscribe to query params and fetch the course details based on the course name
-        this.activeRouter.queryParams.subscribe( params => this.addedCourseName = params["coursename"])        
+        this.activeRouter.queryParams.subscribe( params => {
+            this.addedCourseName = params["coursename"]
+            this.successMessage = params["message"]
+        })        
         this.adminService.getCourse( this.addedCourseName ).subscribe({
             // Handling backend responses 
             next: ( response: any )=>{
@@ -193,7 +197,7 @@ export class AdminAddCoursePage implements OnInit {
                 next: ( response: any )=>{
                     // Handling success responses 
                     if ( response.success ) {
-                        Swal.fire("Course added successfully").then(()=>{
+                        Swal.fire(this.successMessage).then(()=>{
                             this.route.navigate(["/admin/courses"])
                         })
                     }

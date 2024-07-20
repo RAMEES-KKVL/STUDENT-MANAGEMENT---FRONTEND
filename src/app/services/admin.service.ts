@@ -21,8 +21,10 @@ export class AdminService {
     }
 
     addCourseDetails(data: Object){
-        console.log(data);
-        
         return this.http.post(`${Environment.url}/admin/add-course_topics`, data)
+    }
+
+    deleteCourse(courseName: string){
+        return this.http.delete(`${Environment.url}/admin/delete-course?courseName=${courseName}`)
     }
 }
