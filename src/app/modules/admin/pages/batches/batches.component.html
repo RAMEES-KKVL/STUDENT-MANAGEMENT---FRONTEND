@@ -11,38 +11,33 @@
             <div class="h-auto p-3 flex flex-col gap-2">
 
                 <!-- TAB SIZE VIEW -->
-                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden">
+                <div *ngFor="let batch of batchList" class="border p-2 rounded-md flex justify-between gap-1 md:hidden">
                     <!-- BATCH DETAILS -->
                     <div class="flex flex-col overflow-scroll">
                         <div class="flex gap-3">
                             <div>Batch Name</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ batch.batchName }}</div>
                         </div>
                         <div class="flex gap-3 overflow-scroll">
                             <div>Strength</div>
                             <div>:</div>
-                            <div class="overflow-scroll truncate-description">100</div>
+                            <div class="overflow-scroll truncate-description">{{ batch.strength?.length ?? 0 }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>Starting Date</div>
                             <div>:</div>
-                            <div>Demo</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div>Duration</div>
-                            <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ batch.startingDate }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>CreatedAt</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ batch.createdAt }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>UpdatedAt</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ batch.updatedAt }}</div>
                         </div>
                     </div>
                     <!-- ACTION BUTTONS -->
@@ -60,24 +55,22 @@
                 <div class="hidden md:block">
                     <!-- HEADING ROW  -->
                     <div class="flex mb-2 ">
-                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Batch Name</div>
+                        <div class="w-3/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Batch Name</div>
                         <div class="w-1/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Strength</div>
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Starting Date</div>
-                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Duration</div>
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">CreatedAt</div>
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">UpdatedAt</div>
-                        <div class="w-1/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Action</div>
+                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Action</div>
                     </div>
 
                     <!-- DETAILS ROW -->
-                    <div class="flex">
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">Batch 1</div>
-                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto truncate-description">100</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto truncate-description">Date</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">12 weeks</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">DATE</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">DATE</div>
-                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto flex">
+                    <div class="flex" *ngFor="let batch of batchList">
+                        <div class="w-3/12 border border-gray-300 px-2 py-1 overflow-auto">{{ batch.batchName }}</div>
+                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto truncate-description">{{ batch.strength?.length ?? 0 }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto truncate-description">{{ batch.startingDate }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ batch.createdAt }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ batch.updatedAt }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto flex">
                             <button class="hover:border hover:border-gray-400 px-2 py-1 rounded-lg active:scale-95 transition ease-in-out">
                                 <i class="fa-solid fa-file-pen"></i>
                             </button>
@@ -107,22 +100,41 @@
                 <i class="fa-solid fa-times"></i>
             </button>
         </div>
-        <form>
+        <form
+            [formGroup]="batchCreationForm"
+            (ngSubmit)="onSubmit()"
+            novalidate
+        >
 
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Batch Name</label>
-                <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
+                <div class="text-red-900 pl-1" *ngIf="nameError && nameTouched">
+                    Please enter Batch Name.
+                </div>
+                <input 
+                    type="text"
+                    formControlName="batchName" 
+                    required
+                    (blur)="onNameChange($event)"
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 pl-1">strength</label>
-                <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none">
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 pl-1">Duration</label>
-                <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
+                <label class="block text-gray-700 pl-1">Starting Date</label>
+                <div class="text-red-900 pl-1" *ngIf="startingDateError && startingDateTouched">
+                    Please enter Batch Name.
+                </div>
+                <input 
+                    type="date"
+                    formControlName="startingDate" 
+                    (blur)="onStartingDateChange($event)"
+                    required
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
             </div>
 
-            <div class="flex justify-end">
+            <div class="flex justify-between">
+                <div class="text-red-900 ml-1">{{ errorMessage }}</div>
                 <button type="submit" class="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 transition ease-in-out active:scale-95">Create</button>
             </div>
 

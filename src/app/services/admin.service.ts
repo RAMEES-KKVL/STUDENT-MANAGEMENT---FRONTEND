@@ -27,4 +27,12 @@ export class AdminService {
     deleteCourse(courseName: string){
         return this.http.delete(`${Environment.url}/admin/delete-course?courseName=${courseName}`)
     }
+
+    getBatches(){
+        return this.http.get(`${Environment.url}/admin/batches`)
+    }
+
+    addBatch(data: object){
+        return this.http.post(`${Environment.url}/admin/add-batch`, data)
+    }
 }
