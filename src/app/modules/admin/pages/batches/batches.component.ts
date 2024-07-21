@@ -1,7 +1,6 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
 import { batchInterface } from "src/app/models/batch.interface";
 import { AdminService } from "src/app/services/admin.service";
 import Swal from "sweetalert2";
@@ -23,7 +22,7 @@ export class AdminBatchPage implements OnInit {
 
     batchCreationForm: FormGroup
 
-    constructor(private fb: FormBuilder, private adminService: AdminService, private datePipe: DatePipe, private route: Router){
+    constructor(private fb: FormBuilder, private adminService: AdminService, private datePipe: DatePipe){
         this.batchCreationForm = this.fb.group({
             batchName: ["", Validators.required],
             startingDate: ["", Validators.required]
@@ -59,7 +58,7 @@ export class AdminBatchPage implements OnInit {
           return '';  // Handle cases where createdAt is missing
         } else {
             // Changing date format 
-            return this.datePipe.transform(new Date(timestamp), 'dd-MMMM-yyyy');
+            return this.datePipe.transform(new Date(timestamp), 'dd-MM-yyyy');
         }
     }
 

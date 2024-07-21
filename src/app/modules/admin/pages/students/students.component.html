@@ -11,38 +11,38 @@
             <div class="h-auto p-3 flex flex-col gap-2">
 
                 <!-- TAB SIZE VIEW -->
-                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden">
+                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden" *ngFor="let student of studentsList">
                     <!-- STUDENT DETAILS -->
                     <div class="flex flex-col">
                         <div class="flex gap-3">
                             <div>Name</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ student.fullName }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>Email</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ student.email }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>Course</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ student.course }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>Batch</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ student.batch }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>CreatedAt</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ student.createdAt }}</div>
                         </div>
                         <div class="flex gap-3">
                             <div>UpdatedAt</div>
                             <div>:</div>
-                            <div>Demo</div>
+                            <div>{{ student.updatedAt }}</div>
                         </div>
                     </div>
                     <!-- ACTION BUTTONS -->
@@ -70,13 +70,13 @@
                     </div>
 
                     <!-- DETAILS ROW -->
-                    <div class="flex">
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">Ramees</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">rameesp@gamil.com</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">MEAN</div>
-                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto">AFDY</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">DATE</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">DATE</div>
+                    <div class="flex" *ngFor="let student of studentsList">
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.fullName }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.email }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.course }}</div>
+                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.batch }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.createdAt }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.updatedAt }}</div>
                         <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto flex">
                             <button class="hover:border hover:border-gray-400 px-2 py-1 rounded-lg active:scale-95 transition ease-in-out">
                                 <i class="fa-solid fa-user-pen"></i>
@@ -107,38 +107,81 @@
                 <i class="fa-solid fa-times"></i>
             </button>
         </div>
-        <form>
+        <form
+            [formGroup]="addStudentForm"
+            (ngSubmit)="onSubmit()"
+            novalidate
+        >
 
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Full Name</label>
-                <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
+                <div class="text-red-900 pl-1" *ngIf="nameError && nameTouched">
+                    Please enter Full Name.
+                </div>
+                <input 
+                    type="text" 
+                    formControlName="fullName"
+                    (blur)="onNameChange($event)"
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Email</label>
-                <input type="email" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
+                <div class="text-red-900 pl-1" *ngIf="emailError && emailTouched">
+                    Please enter Email.
+                </div>
+                <div class="text-red-900" *ngIf="emailErrorPattern && emailTouched">
+                    Please enter a valid email address.
+                </div>
+                <input 
+                    type="email" 
+                    formControlName="email"
+                    (blur)="onEmailChange($event)"
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Phone</label>
-                <input type="text" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" />
+                <div class="text-red-900 pl-1" *ngIf="phoneError && phoneTouched">
+                    Please enter Phone number.
+                </div>
+                <div class="text-red-900" *ngIf="phoneErrorPattern && phoneTouched">
+                    Please provide a valid mobile number
+                </div>
+                <input 
+                    type="number" 
+                    formControlName="phone"
+                    (blur)="onPhoneChange($event)"
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Course</label>
-                <select name="" id="" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-3 px-3 outline-none">
+                <div class="text-red-900 pl-1" *ngIf="(addStudentForm.get('course')?.invalid && addStudentForm.get('course')?.touched)">
+                    Please provide course.
+                </div>
+                <select formControlName="course" id="" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-3 px-3 outline-none">
                     <option value="" selected disabled class="">Choose Course</option>
-                    <option value="">Course 1</option>
-                    <option value="">Course 2</option>
+                    <option *ngFor="let course of courseList" [value]="course.courseName" >
+                        {{ course.courseName }}
+                    </option>
                 </select>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 pl-1">Batch</label>
-                <select name="" id="" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-3 px-3 outline-none">
+                <div class="text-red-900 pl-1" *ngIf="(addStudentForm.get('batch')?.invalid && addStudentForm.get('batch')?.touched)">
+                    Please provide batch.
+                </div>
+                <select formControlName="batch" id="" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-3 px-3 outline-none">
                     <option value="" selected disabled class="">Choose Batch</option>
-                    <option value="">Batch 1</option>
-                    <option value="">Batch 2</option>
+                    <option *ngFor="let batch of batchList" [value]="batch.batchName">
+                        {{ batch.batchName }}
+                    </option>
                 </select>
             </div>
 
-            <div class="flex justify-end">
+            <div class="flex justify-between">
+                <div class="text-red-900 ml-1">{{ errorMessage }}</div>
                 <button type="submit" class="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 transition ease-in-out active:scale-95">Create</button>
             </div>
 

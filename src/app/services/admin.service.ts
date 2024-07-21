@@ -43,4 +43,12 @@ export class AdminService {
     deleteBatch(batchName: string){
         return this.http.delete(`${Environment.url}/admin/delete-batch?batchName=${batchName}`)
     }
+
+    getStudents(){
+        return this.http.get(`${Environment.url}/admin/students`)
+    }
+
+    addStudent(data: object){
+        return this.http.post(`${Environment.url}/admin/add-student`, data)
+    }
 }
