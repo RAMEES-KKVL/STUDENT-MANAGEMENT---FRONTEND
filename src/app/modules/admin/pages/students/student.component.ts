@@ -139,28 +139,79 @@ export class AdminStudentsPage implements OnInit {
         }, 3000);
     }
 
+    // Function for edit student details
+    isEditMode: boolean = false
+    studentId: string = ""
+    selectedStudent: any = null
+    editStudent(studentName: string, id: string) {
+        this.studentId = id        
+        this.selectedStudent = this.studentsList.find( student => student.fullName === studentName)
+        if ( this.selectedStudent ) {
+            // Adding values to the input fields
+            this.addStudentForm.patchValue({
+                fullName : this.selectedStudent.fullName,
+                email : this.selectedStudent.email,
+                phone : this.selectedStudent.phone,
+                course : this.selectedStudent.course,
+                batch : this.selectedStudent.batch
+            })
+            this.isEditMode = true;
+            this.togglePopup()
+        }
+    }
 
     onSubmit() {
-        this.adminService.addStudent(this.addStudentForm.value).subscribe({
-            // Handling backend responses 
-            next: ( response: any )=>{
-                // Handling success responses 
-                if ( response.success ) {
-                    this.togglePopup()
-                    const addedStudent = response.addedStudent
-                    addedStudent.createdAt = this.getFormattedDate(addedStudent.createdAt)
-                    addedStudent.updatedAt = this.getFormattedDate(addedStudent.updatedAt)
-                    this.studentsList.push(addedStudent)
-                    Swal.fire("Student added successfully")
+        if ( this.isEditMode ) {
+            // Updating student details
+            this.adminService.editStudent(this.addStudentForm.value, this.studentId).subscribe({
+                // Handling backend responses 
+                next: ( response: any )=>{
+                    // Handling success responses 
+                    if ( response.success ) {
+                        this.togglePopup()
+                        const updatedStudent = response.updatedStudent
+                        updatedStudent.createdAt = this.getFormattedDate(updatedStudent.createdAt)
+                        updatedStudent.updatedAt = this.getFormattedDate(updatedStudent.updatedAt)
+
+                        // Replacing updated student details 
+                        const index = this.studentsList.findIndex( student => student._id === this.studentId )
+                        if ( index !== -1 ) {
+                            this.studentsList[index] = updatedStudent
+                        }
+                        this.isEditMode = false
+                        Swal.fire("Student details updated successfully")
+                    }
+                },
+                error: ( response: any )=>{
+                    // Handling error responses
+                    this.errorMessage = response.error.message
+                    setTimeout(() => {
+                        this.errorMessage = ""
+                    }, 3000);
                 }
-            },
-            error: ( response: any )=>{
-                // Handling error responses
-                this.errorMessage = response.error.message
-                setTimeout(() => {
-                    this.errorMessage = ""
-                }, 3000);
-            }
-        })
+            })
+        } else {
+            this.adminService.addStudent(this.addStudentForm.value).subscribe({
+                // Handling backend responses 
+                next: ( response: any )=>{
+                    // Handling success responses 
+                    if ( response.success ) {
+                        this.togglePopup()
+                        const addedStudent = response.addedStudent
+                        addedStudent.createdAt = this.getFormattedDate(addedStudent.createdAt)
+                        addedStudent.updatedAt = this.getFormattedDate(addedStudent.updatedAt)
+                        this.studentsList.push(addedStudent)
+                        Swal.fire("Student added successfully")
+                    }
+                },
+                error: ( response: any )=>{
+                    // Handling error responses
+                    this.errorMessage = response.error.message
+                    setTimeout(() => {
+                        this.errorMessage = ""
+                    }, 3000);
+                }
+            })
+        }
     }
 }

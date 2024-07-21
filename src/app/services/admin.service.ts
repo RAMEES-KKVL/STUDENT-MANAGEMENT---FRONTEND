@@ -51,4 +51,8 @@ export class AdminService {
     addStudent(data: object){
         return this.http.post(`${Environment.url}/admin/add-student`, data)
     }
+
+    editStudent(data: object, studentId: string){
+        return this.http.patch(`${Environment.url}/admin/edit-student?studentId=${studentId}`, data)
+    }
 }
