@@ -33,7 +33,7 @@ input[type="number"]::-webkit-inner-spin-button {
   text-overflow: ellipsis;
 }
 
-#dropdown:hover #dropdown-content,
-#dropdown-content:hover {
-    display: block;
+.pageactive {
+  background-color: #d1d5db; /* Example active color */
+  font-weight: bold;
 }

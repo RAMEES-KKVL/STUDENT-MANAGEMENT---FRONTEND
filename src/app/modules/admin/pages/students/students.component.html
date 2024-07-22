@@ -11,7 +11,7 @@
             <div class="h-auto p-3 flex flex-col gap-2">
 
                 <!-- TAB SIZE VIEW -->
-                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden" *ngFor="let student of studentsList">
+                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden" *ngFor="let student of paginatedStudents">
                     <!-- STUDENT DETAILS -->
                     <div class="flex flex-col">
                         <div class="flex gap-3">
@@ -50,7 +50,7 @@
                         <button (click)="editStudent(student.fullName, student._id)" class="hover:border hover:border-gray-400 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                             <i class="fa-solid fa-user-pen"></i>
                         </button>
-                        <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                        <button (click)="deleteStudent(student._id)" class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                             <i class="fa-solid fa-trash text-red-800"></i>
                         </button>
                     </div>
@@ -70,7 +70,7 @@
                     </div>
 
                     <!-- DETAILS ROW -->
-                    <div class="flex" *ngFor="let student of studentsList">
+                    <div class="flex" *ngFor="let student of paginatedStudents">
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.fullName }}</div>
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.email }}</div>
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ student.course }}</div>
@@ -81,7 +81,7 @@
                             <button (click)="editStudent(student.fullName, student._id)" class="hover:border hover:border-gray-400 px-2 py-1 rounded-lg active:scale-95 transition ease-in-out">
                                 <i class="fa-solid fa-user-pen"></i>
                             </button>
-                            <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                            <button (click)="deleteStudent(student._id)" class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                                 <i class="fa-solid fa-trash text-red-800"></i>
                             </button>
                         </div>
@@ -93,7 +93,12 @@
         </div>
 
         <!-- PAGINATION COMPONENT -->
-        <pagination-component></pagination-component>
+        <pagination-component
+            [currentPage]="currentPage"
+            [totalItems]="studentsList.length"
+            [itemsPerPage]="itemsPerPage"
+            (pageChange)="onPageChange($event)"
+        ></pagination-component>
     </div>
 
 </div>

@@ -46,6 +46,7 @@ export class AdminStudentsPage implements OnInit {
                     createdAt: this.getFormattedDate(student.createdAt),
                     updatedAt: this.getFormattedDate(student.updatedAt),
                 }))
+                this.updatePaginatedStudent()  
             },
             error: ( response: any )=>{
                 // Handling error responses
@@ -74,6 +75,20 @@ export class AdminStudentsPage implements OnInit {
             }
         })
     }
+
+    currentPage = 1
+    itemsPerPage = 5
+    paginatedStudents: any[] = [];
+    updatePaginatedStudent() {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage
+        const endIndex = startIndex + this.itemsPerPage
+        this.paginatedStudents = this.studentsList.slice(startIndex, endIndex)
+    }
+
+    onPageChange(page: number) {
+        this.currentPage = page;
+        this.updatePaginatedStudent();
+      }
 
     getFormattedDate(timestamp: number | Date): string | null {
         if ( !timestamp ) {
@@ -160,6 +175,35 @@ export class AdminStudentsPage implements OnInit {
         }
     }
 
+    // Function for deleting student
+    deleteStudent(studentId: string) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This process is irreversible.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, go ahead.',
+            cancelButtonText: 'No, let me think',
+        }).then((result) => {
+            if (result.value) {
+                this.adminService.deletestudent(studentId).subscribe({
+                    next: ( response: any )=>{
+                        if ( response.success ) {
+                            // Removing the deleted student from the list
+                            this.studentsList = this.studentsList.filter( student => student._id !== studentId )
+                            Swal.fire('Removed!', 'Student details removed successfully.', 'success');
+                        }
+                    },
+                    error: ( response: any )=>{
+                        Swal.fire("Failed to delete")
+                    }
+                })
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire('Cancelled', 'Student details still in our database', 'error');
+            }
+        });
+    }
+
     onSubmit() {
         if ( this.isEditMode ) {
             // Updating student details
@@ -179,6 +223,7 @@ export class AdminStudentsPage implements OnInit {
                             this.studentsList[index] = updatedStudent
                         }
                         this.isEditMode = false
+                        this.updatePaginatedStudent()
                         Swal.fire("Student details updated successfully")
                     }
                 },

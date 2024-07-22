@@ -124,7 +124,7 @@ export class AdminBatchPage implements OnInit {
                         if ( response.success ) {
                             // Removing the deleted batch from the list
                             this.batchList = this.batchList.filter( batch => batch.batchName !== batchName )
-                            Swal.fire('Removed!', 'Product removed successfully.', 'success');
+                            Swal.fire('Removed!', 'Batch removed successfully.', 'success');
                         }
                     },
                     error: ( response: any )=>{
@@ -132,7 +132,7 @@ export class AdminBatchPage implements OnInit {
                     }
                 })
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-              Swal.fire('Cancelled', 'Product still in our database', 'error');
+              Swal.fire('Cancelled', 'Batch still in our database', 'error');
             }
         });
     }

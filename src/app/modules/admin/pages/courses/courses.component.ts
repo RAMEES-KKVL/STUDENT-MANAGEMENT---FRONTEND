@@ -136,7 +136,7 @@ export class AdminCoursePage implements OnInit {
                         if ( response.success ) {
                             // Removing the deleted course from the list
                             this.courseList = this.courseList.filter( course => course.courseName !== courseName )
-                            Swal.fire('Removed!', 'Product removed successfully.', 'success');
+                            Swal.fire('Removed!', 'Course removed successfully.', 'success');
                         }
                     },
                     error: ( response: any )=>{
@@ -144,7 +144,7 @@ export class AdminCoursePage implements OnInit {
                     }
                 })
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-              Swal.fire('Cancelled', 'Product still in our database', 'error');
+              Swal.fire('Cancelled', 'Course still in our database', 'error');
             }
         }); 
     }
