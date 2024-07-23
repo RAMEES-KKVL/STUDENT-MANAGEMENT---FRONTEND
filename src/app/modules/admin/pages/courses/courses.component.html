@@ -11,7 +11,7 @@
             <div class="h-auto p-3 flex flex-col gap-2">
 
                 <!-- TAB SIZE VIEW -->
-                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden" *ngFor="let course of courseList">
+                <div class="border p-2 rounded-md flex justify-between gap-1 md:hidden" *ngFor="let course of paginatedCourses">
                     <!-- COURSE DETAILS -->
                     <div class="flex flex-col overflow-scroll">
                         <div class="flex gap-3">
@@ -64,7 +64,7 @@
                     </div>
 
                     <!-- DETAILS ROW -->
-                    <div class="flex" *ngFor="let course of courseList">
+                    <div class="flex" *ngFor="let course of paginatedCourses">
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ course.courseName }}</div>
                         <div class="w-3/12 border border-gray-300 px-2 py-1 overflow-auto truncate-description">{{ course.description }}</div>
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ course.duration }} {{ course.durationUnit }}</div>
@@ -86,7 +86,12 @@
         </div>
 
         <!-- PAGINATION COMPONENT -->
-        <pagination-component></pagination-component>
+        <pagination-component
+            [currentPage]="currentPage"
+            [totalItems]="courseList.length"
+            [itemsPerPage]="itemsPerPage"
+            (pageChange)="onPageChange($event)"
+        ></pagination-component>
     </div>
 
 </div>

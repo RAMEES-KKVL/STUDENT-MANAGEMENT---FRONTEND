@@ -59,4 +59,12 @@ export class AdminService {
     deletestudent(studentId: string){
         return this.http.delete(`${Environment.url}/admin/delete-student?studentId=${studentId}`)
     }
+
+    getAdmin(){
+        return this.http.get(`${Environment.url}/admin/admins`)
+    }
+
+    addAdmin(data: object){
+        return this.http.post(`${Environment.url}/admin/add-admin`, data)
+    }
 }

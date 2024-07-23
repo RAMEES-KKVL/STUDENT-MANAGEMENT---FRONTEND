@@ -88,7 +88,7 @@ export class AdminStudentsPage implements OnInit {
     onPageChange(page: number) {
         this.currentPage = page;
         this.updatePaginatedStudent();
-      }
+    }
 
     getFormattedDate(timestamp: number | Date): string | null {
         if ( !timestamp ) {
@@ -190,7 +190,17 @@ export class AdminStudentsPage implements OnInit {
                     next: ( response: any )=>{
                         if ( response.success ) {
                             // Removing the deleted student from the list
-                            this.studentsList = this.studentsList.filter( student => student._id !== studentId )
+                            this.studentsList = this.studentsList.filter(student => student._id !== studentId);
+                            this.updatePaginatedStudent();
+
+                            // Check if there are more students on the next page
+                            const nextPageIndex = this.currentPage * this.itemsPerPage;
+                            if (this.studentsList.length > nextPageIndex) {
+                                // Move the first student from the next page to the current page
+                                const nextStudent = this.studentsList[nextPageIndex];
+                                this.paginatedStudents.push(nextStudent);
+                                this.updatePaginatedStudent();
+                            }
                             Swal.fire('Removed!', 'Student details removed successfully.', 'success');
                         }
                     },
@@ -245,7 +255,29 @@ export class AdminStudentsPage implements OnInit {
                         const addedStudent = response.addedStudent
                         addedStudent.createdAt = this.getFormattedDate(addedStudent.createdAt)
                         addedStudent.updatedAt = this.getFormattedDate(addedStudent.updatedAt)
-                        this.studentsList.push(addedStudent)
+
+                        // Add the new student to the main list
+                        this.studentsList.push(addedStudent);
+
+                        // Calculate the number of pages
+                        const totalPages = Math.ceil(this.studentsList.length / this.itemsPerPage);
+                        // Check if the current page is the last page
+                        if (this.currentPage === totalPages) {
+                            // If the current page is the last page and it's not full, add the student to the current page
+                            if (this.paginatedStudents.length < this.itemsPerPage) {
+                                this.paginatedStudents.push(addedStudent);
+                            } else {
+                                // If the current page is full, set the current page to the last page
+                                this.currentPage = totalPages;
+                                this.updatePaginatedStudent();
+                            }
+                        } else {
+                            // If the current page is not the last page, update the pagination to reflect the new student count
+                            this.updatePaginatedStudent();
+                        }
+                        
+                        // Clear the input fields
+                        this.addStudentForm.reset();
                         Swal.fire("Student added successfully")
                     }
                 },

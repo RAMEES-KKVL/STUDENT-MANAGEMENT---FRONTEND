@@ -1,0 +1,199 @@
+<div class="w-full h-full overflow-auto">
+    <div class="w-full h-[4rem] px-5 flex items-center justify-between">
+        <div class="text-xl">ADMINS</div>
+        <button (click)="togglePopup()" class="bg-slate-300 rounded-lg px-5 py-1.5 hover:bg-slate-400 transition active:scale-95 ease-in-out">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+    <div class="w-full flex justify-evenly flex-col" style="height: calc(100% - 4rem);">
+        
+        <div class="h-[85%] w-[99%] border shadow-lg overflow-scroll" style="height: calc(100% - 6rem);">
+            <div class="h-auto p-3 flex flex-col gap-2">
+
+                <!-- TAB SIZE VIEW -->
+                <div *ngFor="let admin of paginatedAdmins" class="border p-2 rounded-md flex justify-between gap-1 md:hidden">
+                    <!-- ADMIN DETAILS -->
+                    <div class="flex flex-col">
+                        <div class="flex gap-3">
+                            <div>Name</div>
+                            <div>:</div>
+                            <div>{{ admin.fullName }}</div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div>Email</div>
+                            <div>:</div>
+                            <div>{{ admin.email }}</div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div>Course</div>
+                            <div>:</div>
+                            <div>{{ admin.Course.View }}</div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div>Batch</div>
+                            <div>:</div>
+                            <div>{{ admin.Batch.View }}</div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div>CreatedAt</div>
+                            <div>:</div>
+                            <div>{{ admin.createdAt }}</div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div>UpdatedAt</div>
+                            <div>:</div>
+                            <div>{{ admin.updatedAt }}</div>
+                        </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="p-3 flex flex-col items-center justify-center gap-5 border-l">
+                        <button class="hover:border hover:border-gray-400 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </button>
+                        <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                            <i class="fa-solid fa-trash text-red-800"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- LAPTOP SIZE VIEW -->
+                <div class="hidden md:block">
+                    <!-- HEADING ROW  -->
+                    <div class="flex mb-2 ">
+                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Name</div>
+                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Email</div>
+                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Course</div>
+                        <div class="w-1/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Batch</div>
+                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">CreatedAt</div>
+                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">UpdatedAt</div>
+                        <div class="w-1/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Action</div>
+                    </div>
+
+                    <!-- DETAILS ROW -->
+                    <div class="flex" *ngFor="let admin of paginatedAdmins">
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.fullName }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.email }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.Course.View }}</div>
+                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.Batch.View }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.createdAt }}</div>
+                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.updatedAt }}</div>
+                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto flex">
+                            <button class="hover:border hover:border-gray-400 px-2 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                                <i class="fa-solid fa-user-pen"></i>
+                            </button>
+                            <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                                <i class="fa-solid fa-trash text-red-800"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- PAGINATION COMPONENT -->
+        <pagination-component
+            [currentPage]="currentPage"
+            [totalItems]="adminList.length"
+            [itemsPerPage]="itemsPerPage"
+            (pageChange)="onPageChange($event)"
+        ></pagination-component>
+    </div>
+
+</div>
+
+<!-- POPUP DIV FOR ADDING NEW STUDENTS -->
+<div *ngIf="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div [ngClass]="{ 'animate-fadeIn' : showPopup, 'animate-fadeOut' : !showPopup }" class="bg-white p-5 rounded-lg shadow-lg w-1/2 xl_max:w-[60%] h-auto max-h-[80%] overflow-auto md_max:w-[85%] sm_max:w-full">
+        <div class="flex justify-between items-center mb-5">
+            <h2 class="text-xl">Add New Admin</h2>
+            <button (click)="togglePopup()" class="text-gray-500 hover:text-gray-700 text-xl">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+        <form
+            [formGroup]="addAdmins"
+            (ngSubmit)="onSubmit()"
+            novalidate
+        >
+
+            <div class="mb-4">
+                <label class="block text-gray-700 pl-1">Full Name</label>
+                <div class="text-red-900 pl-1" *ngIf="nameError && nameTouched">
+                    Please enter Full Name.
+                </div>
+                <input 
+                    type="text" 
+                    formControlName="fullName"
+                    (blur)="onNameChange($event)"
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 pl-1">Email</label>
+                <div class="text-red-900 pl-1" *ngIf="emailError && emailTouched">
+                    Please enter Email.
+                </div>
+                <div class="text-red-900" *ngIf="emailErrorPattern && emailTouched">
+                    Please enter a valid email address.
+                </div>
+                <input 
+                    type="email"
+                    formControlName="email"
+                    (blur)="onEmailChange($event)" 
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 pl-1">Phone</label>
+                <div class="text-red-900 pl-1" *ngIf="phoneError && phoneTouched">
+                    Please enter Phone number.
+                </div>
+                <div class="text-red-900" *ngIf="phoneErrorPattern && phoneTouched">
+                    Please provide a valid mobile number
+                </div>
+                <input 
+                    type="number" 
+                    formControlName="phone"
+                    (blur)="onPhoneChange($event)"
+                    class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-2 px-3 outline-none" 
+                />
+            </div>
+
+            <div class="mb-4 relative" *ngFor="let control of controlsArray; let i = index" (click)="showCheckBox(i)">
+                <label class="block text-gray-700 pl-1">{{ control }}</label>
+                <div id="dropdown" class="mt-1 w-full bg-gray-50 border border-gray-300 focus:bg-gray-200 rounded-md py-3 px-3 outline-none cursor-pointer">
+                    <span>{{ control }} permissions</span>
+                    <div 
+                        (click)="preventClick($event)" 
+                        id="dropdown-content" 
+                        #admincheckBox 
+                        class="hidden absolute w-full bg-white shadow-md mt-1 border border-gray-300 rounded-md z-10 top-[4.5rem] left-0"
+                    >
+                        <div 
+                            [formGroupName]="control" 
+                            *ngFor="let access of accessArray" 
+                            class="flex items-center px-3 py-2 hover:bg-gray-100"
+                        >
+                            <input 
+                                type="checkbox" 
+                                id="admin1" 
+                                name="admins" 
+                                [formControlName]="access" 
+                                class="mr-2"
+                            >
+                            <label for="admin1" class="text-gray-700">{{ access }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex justify-between">
+                <div class="text-red-900 ml-1">{{ errorMessage }}</div>
+                <button type="submit" class="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 transition ease-in-out active:scale-95">Create</button>
+            </div>
+
+        </form>
+    </div>
+</div> 

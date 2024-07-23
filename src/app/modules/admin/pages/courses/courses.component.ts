@@ -41,6 +41,7 @@ export class AdminCoursePage implements OnInit {
                         formattedCreatedAt: this.getFormattedDate(course.createdAt),
                         formattedUpdatedAt: this.getFormattedDate(course.updatedAt)
                     }))
+                    this.updatePaginatedCourse() 
                 }
             },
             error: ( response: any )=>{
@@ -57,6 +58,20 @@ export class AdminCoursePage implements OnInit {
             // Changing date format 
             return this.datePipe.transform(new Date(timestamp), 'dd-MMMM-yyyy');
         }
+    }
+
+    currentPage = 1
+    itemsPerPage = 5
+    paginatedCourses: any[] = [];
+    updatePaginatedCourse() {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage
+        const endIndex = startIndex + this.itemsPerPage
+        this.paginatedCourses = this.courseList.slice(startIndex, endIndex)
+    }
+
+    onPageChange(page: number) {
+        this.currentPage = page;
+        this.updatePaginatedCourse();
     }
 
     showPopup: boolean = false
@@ -135,7 +150,18 @@ export class AdminCoursePage implements OnInit {
                     next: ( response: any )=>{
                         if ( response.success ) {
                             // Removing the deleted course from the list
-                            this.courseList = this.courseList.filter( course => course.courseName !== courseName )
+                            this.courseList = this.courseList.filter(course => course.courseName !== courseName);
+                            this.updatePaginatedCourse();
+
+                            // Check if there are more courses on the next page
+                            const nextPageIndex = this.currentPage * this.itemsPerPage;
+                            if (this.courseList.length > nextPageIndex) {
+                                // Move the first course from the next page to the current page
+                                const nextcourse = this.courseList[nextPageIndex];
+                                this.paginatedCourses.push(nextcourse);
+                                this.updatePaginatedCourse();
+                            }
+
                             Swal.fire('Removed!', 'Course removed successfully.', 'success');
                         }
                     },
@@ -162,6 +188,33 @@ export class AdminCoursePage implements OnInit {
                     // Handling success responses 
                     if ( response.success ) {
                         const coursename = response.courseName
+                        const addedCourse = response.addedCourse
+                        addedCourse.createdAt = this.getFormattedDate(addedCourse.createdAt)
+                        addedCourse.updatedAt = this.getFormattedDate(addedCourse.updatedAt)
+
+                        // Add the new student to the main list
+                        this.courseList.push(addedCourse);
+
+                        // Calculate the number of pages
+                        const totalPages = Math.ceil(this.courseList.length / this.itemsPerPage);
+                        // Check if the current page is the last page
+                        if (this.currentPage === totalPages) {
+                            // If the current page is the last page and it's not full, add the course to the current page
+                            if (this.paginatedCourses.length < this.itemsPerPage) {
+                                this.paginatedCourses.push(addedCourse);
+                            } else {
+                                // If the current page is full, set the current page to the last page
+                                this.currentPage = totalPages;
+                                this.updatePaginatedCourse();
+                            }
+                        } else {
+                            // If the current page is not the last page, update the pagination to reflect the new Course count
+                            this.updatePaginatedCourse();
+                        }
+                        
+                        // Clear the input fields
+                        this.courseCreationForm.reset();
+
                         this.route.navigate(["/admin/add-course"], { queryParams: { coursename, message : "Course added successfully" }})
                     }
                 },

@@ -44,6 +44,7 @@ export class AdminBatchPage implements OnInit {
                         createdAt: this.getFormattedDate(batch.createdAt),
                         updatedAt: this.getFormattedDate(batch.updatedAt),
                     }))
+                    this.updatePaginatedBatches()
                 }
             },
             error: ( response: any )=>{
@@ -60,6 +61,20 @@ export class AdminBatchPage implements OnInit {
             // Changing date format 
             return this.datePipe.transform(new Date(timestamp), 'dd-MM-yyyy');
         }
+    }
+
+    currentPage = 1
+    itemsPerPage = 5
+    paginatedBatches: any[] = [];
+    updatePaginatedBatches() {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage
+        const endIndex = startIndex + this.itemsPerPage
+        this.paginatedBatches = this.batchList.slice(startIndex, endIndex)
+    }
+
+    onPageChange(page: number) {
+        this.currentPage = page;
+        this.updatePaginatedBatches();
     }
 
     // Validating batch name input field 
@@ -123,7 +138,17 @@ export class AdminBatchPage implements OnInit {
                     next: ( response: any )=>{
                         if ( response.success ) {
                             // Removing the deleted batch from the list
-                            this.batchList = this.batchList.filter( batch => batch.batchName !== batchName )
+                            this.batchList = this.batchList.filter(batch => batch.batchName !== batchName);
+                            this.updatePaginatedBatches();
+
+                            // Check if there are more Batches on the next page
+                            const nextPageIndex = this.currentPage * this.itemsPerPage;
+                            if (this.batchList.length > nextPageIndex) {
+                                // Move the first Batch from the next page to the current page
+                                const nextBatches = this.batchList[nextPageIndex];
+                                this.paginatedBatches.push(nextBatches);
+                                this.updatePaginatedBatches();
+                            }                            
                             Swal.fire('Removed!', 'Batch removed successfully.', 'success');
                         }
                     },
@@ -146,7 +171,7 @@ export class AdminBatchPage implements OnInit {
                 next: ( response: any )=>{
                     // Handling success responses 
                     if ( response.success ) {
-                        this.showPopup = false
+                        this.togglePopup()
                         const updatedBatch = response.updatedBatch
                         updatedBatch.startingDate = this.getFormattedDate(updatedBatch.startingDate)
                         updatedBatch.createdAt = this.getFormattedDate(updatedBatch.createdAt)
@@ -180,7 +205,30 @@ export class AdminBatchPage implements OnInit {
                         createdBatch.startingDate = this.getFormattedDate(createdBatch.startingDate)
                         createdBatch.createdAt = this.getFormattedDate(createdBatch.createdAt)
                         createdBatch.updatedAt = this.getFormattedDate(createdBatch.updatedAt)
+
+                        // Add the new student to the main list
                         this.batchList.push(createdBatch)
+
+                        // Calculate the number of pages
+                        const totalPages = Math.ceil(this.batchList.length / this.itemsPerPage);
+                        // Check if the current page is the last page
+                        if (this.currentPage === totalPages) {
+                            // If the current page is the last page and it's not full, add the batch to the current page
+                            if (this.paginatedBatches.length < this.itemsPerPage) {
+                                this.paginatedBatches.push(createdBatch);
+                            } else {
+                                // If the current page is full, set the current page to the last page
+                                this.currentPage = totalPages;
+                                this.updatePaginatedBatches();
+                            }
+                        } else {
+                            // If the current page is not the last page, update the pagination to reflect the new Batches count
+                            this.updatePaginatedBatches();
+                        }
+                        
+                        // Clear the input fields
+                        this.batchCreationForm.reset();
+
                         Swal.fire("Batch created successfully")
                     }
                 },
