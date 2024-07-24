@@ -157,7 +157,7 @@ export class AdminBatchPage implements OnInit {
                     }
                 })
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-              Swal.fire('Cancelled', 'Batch still in our database', 'error');
+                Swal.fire('Cancelled', 'Batch still in our database', 'error');
             }
         });
     }

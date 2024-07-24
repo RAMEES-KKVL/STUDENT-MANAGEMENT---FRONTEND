@@ -209,6 +209,45 @@ export class AdminsPageBody implements OnInit {
         }        
     }
 
+    // Function for deleting batch
+    deleteAdmin(adminId: string) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This process is irreversible.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, go ahead.',
+            cancelButtonText: 'No, let me think',
+        }).then((result) => {
+            if (result.value) {
+                this.adminService.deleteAdmin(adminId).subscribe({
+                    next: ( response: any ) => {
+                        if ( response.success ) {
+                            // Removing the deleted admin from list
+                            this.adminList = this.adminList.filter( admin => admin._id !== adminId ) 
+                            this.updatePaginatedAdmins()
+
+                            // Check if there are more Admins on the next page 
+                            const nextPageIndex = this.currentPage * this.itemsPerPage
+                            if ( this.adminList.length > nextPageIndex ) {
+                                // Move rhe first admin from the next page to the current page
+                                const nextAdmin = this.adminList[nextPageIndex]
+                                this.paginatedAdmins.push(nextAdmin)
+                                this.updatePaginatedAdmins()
+                            }
+                            Swal.fire("Removed!", "Removed Admin successfully.", "success")
+                        }
+                    },
+                    error: ( response: any ) => {
+                        Swal.fire("Failed to delete")
+                    }
+                }) 
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Cancelled', 'Batch still in our database', 'error');
+            }
+        })
+    }
+
     onSubmit() {
         if ( this.isEditMode ) {
             // Updating admin details

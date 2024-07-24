@@ -71,4 +71,8 @@ export class AdminService {
     editAdmin(data: object, id: string){
         return this.http.patch(`${Environment.url}/admin/edit-admin?adminId=${id}`, data)
     }
+
+    deleteAdmin(adminId: string){
+        return this.http.delete(`${Environment.url}/admin/delete-admin?adminId=${adminId}`)
+    }
 }

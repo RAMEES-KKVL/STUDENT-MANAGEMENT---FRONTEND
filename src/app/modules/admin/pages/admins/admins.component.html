@@ -50,7 +50,7 @@
                         <button (click)="editAdmin(admin._id)" class="hover:border hover:border-gray-400 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                             <i class="fa-solid fa-user-pen"></i>
                         </button>
-                        <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                        <button (click)="deleteAdmin(admin._id)" class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                             <i class="fa-solid fa-trash text-red-800"></i>
                         </button>
                     </div>
@@ -81,7 +81,7 @@
                             <button (click)="editAdmin(admin._id)" class="hover:border hover:border-gray-400 px-2 py-1 rounded-lg active:scale-95 transition ease-in-out">
                                 <i class="fa-solid fa-user-pen"></i>
                             </button>
-                            <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                            <button (click)="deleteAdmin(admin._id)" class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                                 <i class="fa-solid fa-trash text-red-800"></i>
                             </button>
                         </div>
