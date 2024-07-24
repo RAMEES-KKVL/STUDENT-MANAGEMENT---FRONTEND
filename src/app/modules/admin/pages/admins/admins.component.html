@@ -47,7 +47,7 @@
                     </div>
                     <!-- ACTION BUTTONS -->
                     <div class="p-3 flex flex-col items-center justify-center gap-5 border-l">
-                        <button class="hover:border hover:border-gray-400 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                        <button (click)="editAdmin(admin._id)" class="hover:border hover:border-gray-400 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
                             <i class="fa-solid fa-user-pen"></i>
                         </button>
                         <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">
@@ -61,8 +61,8 @@
                     <!-- HEADING ROW  -->
                     <div class="flex mb-2 ">
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Name</div>
-                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Email</div>
-                        <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Course</div>
+                        <div class="w-3/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Email</div>
+                        <div class="w-1/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Course</div>
                         <div class="w-1/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">Batch</div>
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">CreatedAt</div>
                         <div class="w-2/12 border border-gray-500 px-2 py-1 overflow-auto text-lg">UpdatedAt</div>
@@ -72,13 +72,13 @@
                     <!-- DETAILS ROW -->
                     <div class="flex" *ngFor="let admin of paginatedAdmins">
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.fullName }}</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.email }}</div>
-                        <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.Course.View }}</div>
+                        <div class="w-3/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.email }}</div>
+                        <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.Course.View }}</div>
                         <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.Batch.View }}</div>
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.createdAt }}</div>
                         <div class="w-2/12 border border-gray-300 px-2 py-1 overflow-auto">{{ admin.updatedAt }}</div>
                         <div class="w-1/12 border border-gray-300 px-2 py-1 overflow-auto flex">
-                            <button class="hover:border hover:border-gray-400 px-2 py-1 rounded-lg active:scale-95 transition ease-in-out">
+                            <button (click)="editAdmin(admin._id)" class="hover:border hover:border-gray-400 px-2 py-1 rounded-lg active:scale-95 transition ease-in-out">
                                 <i class="fa-solid fa-user-pen"></i>
                             </button>
                             <button class="hover:border hover:border-red-800 px-3 py-1 rounded-lg active:scale-95 transition ease-in-out">

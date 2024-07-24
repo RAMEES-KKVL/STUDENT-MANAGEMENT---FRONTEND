@@ -94,7 +94,7 @@ export class AdminsPageBody implements OnInit {
     }
 
     currentPage = 1
-    itemsPerPage = 5
+    itemsPerPage = 10
     paginatedAdmins: any[] = [];
     updatePaginatedAdmins() {
         const startIndex = (this.currentPage - 1) * this.itemsPerPage
@@ -187,43 +187,48 @@ export class AdminsPageBody implements OnInit {
     }
 
     errorMessage: string = ""
+    isEditMode: boolean = false
+    adminId: string = "" 
+    selectedAdmin: adminInterface | null = null
+    editAdmin(id: string) {
+        this.adminId = id
+        this.selectedAdmin = this.adminList.find( admin => admin._id === id)
+        if ( this.selectedAdmin ) {
+            // Adding values to the input fields
+            this.addAdmins.patchValue({
+                fullName : this.selectedAdmin.fullName,
+                email : this.selectedAdmin.email,
+                phone : this.selectedAdmin.phone,
+                Admin : this.selectedAdmin.Admin, 
+                Course : this.selectedAdmin.Course,
+                Batch : this.selectedAdmin.Batch,
+                Students : this.selectedAdmin.Students,
+            })
+            this.isEditMode = true;
+            this.showPopup = true;
+        }        
+    }
 
     onSubmit() {
-        if ( this.addAdmins.valid ) {
-            this.adminService.addAdmin(this.addAdmins.value).subscribe({
-                // Handling backend responses
+        if ( this.isEditMode ) {
+            // Updating admin details
+            this.adminService.editAdmin(this.addAdmins.value, this.adminId).subscribe({
+                // Handling backend responses 
                 next: ( response: any )=>{
                     // Handling success responses 
                     if ( response.success ) {
                         this.togglePopup()
-                        const addedAdmin = response.addedAdmin
-                        addedAdmin.createdAt = this.getFormattedDate(addedAdmin.createdAt)
-                        addedAdmin.updatedAt = this.getFormattedDate(addedAdmin.updatedAt)
+                        const updatedAdmin = response.updatedAdmin
+                        updatedAdmin.createdAt = this.getFormattedDate(updatedAdmin.createdAt)
+                        updatedAdmin.updatedAt = this.getFormattedDate(updatedAdmin.updatedAt)
 
-                        // Add the new admin to the main list
-                        this.adminList.push(addedAdmin)
-
-                        // Calculate the number of pages
-                        const totalPages = Math.ceil(this.adminList.length / this.itemsPerPage);
-                        // Check if the current page is the last page
-                        if (this.currentPage === totalPages) {
-                            // If the current page is the last page and it's not full, add the admin to the current page
-                            if (this.paginatedAdmins.length < this.itemsPerPage) {
-                                this.paginatedAdmins.push(addedAdmin);
-                            } else {
-                                // If the current page is full, set the current page to the last page
-                                this.currentPage = totalPages;
-                                this.updatePaginatedAdmins();
-                            }
-                        } else {
-                            // If the current page is not the last page, update the pagination to reflect the new Admin count
-                            this.updatePaginatedAdmins();
+                        // Replacing updated Admin details 
+                        const index = this.adminList.findIndex( admin => admin._id === this.adminId )
+                        if ( index !== -1 ) {
+                            this.adminList[index] = updatedAdmin
                         }
-
-                        // Clear the input fields
-                        this.addAdmins.reset();
-
-                        Swal.fire("Admin details added successfully")
+                        this.isEditMode = false
+                        Swal.fire("Admin details updated successfully")
                     }
                 },
                 error: ( response: any )=>{
@@ -235,10 +240,57 @@ export class AdminsPageBody implements OnInit {
                 }
             })
         } else {
-            this.errorMessage = "Provide required data"
-            setTimeout(() => {
-                this.errorMessage = ""
-            }, 3000);
+            if ( this.addAdmins.valid ) {
+                this.adminService.addAdmin(this.addAdmins.value).subscribe({
+                    // Handling backend responses
+                    next: ( response: any )=>{
+                        // Handling success responses 
+                        if ( response.success ) {
+                            this.togglePopup()
+                            const addedAdmin = response.addedAdmin
+                            addedAdmin.createdAt = this.getFormattedDate(addedAdmin.createdAt)
+                            addedAdmin.updatedAt = this.getFormattedDate(addedAdmin.updatedAt)
+    
+                            // Add the new admin to the main list
+                            this.adminList.push(addedAdmin)
+    
+                            // Calculate the number of pages
+                            const totalPages = Math.ceil(this.adminList.length / this.itemsPerPage);
+                            // Check if the current page is the last page
+                            if (this.currentPage === totalPages) {
+                                // If the current page is the last page and it's not full, add the admin to the current page
+                                if (this.paginatedAdmins.length < this.itemsPerPage) {
+                                    this.paginatedAdmins.push(addedAdmin);
+                                } else {
+                                    // If the current page is full, set the current page to the last page
+                                    this.currentPage = totalPages;
+                                    this.updatePaginatedAdmins();
+                                }
+                            } else {
+                                // If the current page is not the last page, update the pagination to reflect the new Admin count
+                                this.updatePaginatedAdmins();
+                            }
+    
+                            // Clear the input fields
+                            this.addAdmins.reset();
+    
+                            Swal.fire("Admin details added successfully")
+                        }
+                    },
+                    error: ( response: any )=>{
+                        // Handling error responses
+                        this.errorMessage = response.error.message
+                        setTimeout(() => {
+                            this.errorMessage = ""
+                        }, 3000);
+                    }
+                })
+            } else {
+                this.errorMessage = "Provide required data"
+                setTimeout(() => {
+                    this.errorMessage = ""
+                }, 3000);
+            }
         }
     }
 }
