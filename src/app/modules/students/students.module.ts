@@ -5,11 +5,18 @@ import { CommonModule } from "@angular/common";
 import { StudentHeaderComponent } from "./components/header/header.component";
 import { MenuPage } from "./pages/menu-page/menuPage.component";
 import { CalendarComponent } from "./components/calendar/calendar.component";
+import { StudentAttendancePage } from "./pages/attendance/attendance.component";
 
 const routes: Routes = [
     {
         path : "",
-        component : StudentPages
+        component : StudentPages,
+        children : [
+            {
+                path : "attendance",
+                component : StudentAttendancePage
+            }
+        ]
     }
 ]
 @NgModule({
@@ -17,6 +24,7 @@ const routes: Routes = [
         StudentPages,
         StudentHeaderComponent,
         MenuPage,
+        StudentAttendancePage,
         CalendarComponent,
     ],
     imports: [
