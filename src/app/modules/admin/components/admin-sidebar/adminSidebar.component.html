@@ -1,16 +1,47 @@
 
-<!-- --------------------------------------------------- -->
-
-<!-- <div class="flex w-[12rem] xl:w-[14rem]"> -->
+<div class="flex flex-col justify-between h-full">
     <div class="hidden sm:block h-full w-auto p-10">
-        <div class="h-auto w-fullpy-4 sm:px-6 sm:py-5 gap-5 flex items-center justify-center hover:bg-gray-200 hover:text-black active:scale-[0.99] rounded-2xl transition ease-in-out duration-150 overflow-x-auto" *ngFor="let item of sidebarList" (click)="routeNavigator(item.url)">
-            <div class="flex items-center justify-center">
-                <i class="text-lg" [class]="item.icon"></i>
-            </div>
-            <div class="text-lg">
-                {{ item.listName }}
+        <div class="h-auto w-full py-4 sm:px-6 sm:py-5 gap-5 flex items-center justify-center hover:bg-gray-200 hover:text-black active:scale-[0.99] rounded-2xl transition ease-in-out duration-150 overflow-x-auto" *ngFor="let item of permittedArray" (click)="routeNavigator(item.url)">
+            <div *ngIf="item.show" class="flex gap-5">
+                <div class="flex items-center justify-center">
+                    <i class="text-lg" [class]="item.icon"></i>
+                </div>
+                <div class="text-lg">
+                    {{ item.listName }}
+                </div>
             </div>
         </div>
     </div>
-<!-- </div> -->
+    <div class="w-auto">
+        <div class="h-auto w-full p-10 sm:px-6 sm:py-5 gap-5 flex items-center justify-center active:scale-[0.99] rounded-2xl transition ease-in-out duration-150 overflow-x-auto">
+            <div class="h-[70%] w-70% flex items-center border rounded-xl p-3">
+                <div class="flex items-center justify-center border w-10 h-10 rounded-full">
+                    
+                    <img src="{{ profileImage }}" class="rounded-full" alt="">
+                </div>
+                <div class="text-lg ml-4 w-[7rem] h-[2rem] singleLineBreak">
+                    {{ adminName }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+
+
+<!-- admin: {
+    Admin: { View: true, Add: false, Edit: false, Delete: false },
+    Course: { View: true, Add: false, Edit: false, Delete: false },
+    Batch: { View: false, Add: false, Edit: false, Delete: false },
+    Students: { View: false, Add: false, Edit: false, Delete: false },
+    _id: '669f7e182e6b58707f87a521',
+    fullName: 'aabh',
+    email: 'a@gmail.com',
+    phone: 8899889900,
+    createdAt: '2024-07-23T09:55:36.257Z',
+    updatedAt: '2024-07-23T09:55:36.257Z',
+    __v: 0
+  }, -->

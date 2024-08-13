@@ -13,34 +13,48 @@ import { AdminCoursePage } from "./pages/courses/courses.component";
 import { AdminAddCoursePage } from "./pages/add-course/adminAddCourse.component";
 import { AdminBatchPage } from "./pages/batches/batches.component";
 import { AdminsPageBody } from "./pages/admins/admins.component";
+import { AdminLoginPage } from "./pages/admin-login/adminLogin.component";
+import { AdminAuthGuard } from "src/app/services/adminAuthGuard.service";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { AuthGuard } from "src/app/services/auth.guard.service";
 
 const routes: Routes = [
     {
+        path : "login",
+        component : AdminLoginPage
+    },
+    {
         path : "",
         component : AdminPages,
+        canActivate: [AdminAuthGuard],
         children : [
             {
                 path : "students",
-                component : AdminStudentsPage
+                component : AdminStudentsPage,
+                data : { permission: ["View"] }
             },
             {
                 path : "courses",
                 component : AdminCoursePage,
+                data : { permission: ["View"] }
             },
             {
                 path : "add-course",
-                component : AdminAddCoursePage
+                component : AdminAddCoursePage,
+                data : { permission: ["View"] }
             },
             {
                 path : "batches",
-                component : AdminBatchPage
+                component : AdminBatchPage,
+                data : { permission: ["View"] }
             },
             {
                 path : "admins",
-                component : AdminsPageBody
+                component : AdminsPageBody,
+                data : { permission: ["View"] }
             }
         ]
-    }
+    },
 ]
 
 @NgModule({
@@ -53,7 +67,8 @@ const routes: Routes = [
         AdminCoursePage,
         AdminAddCoursePage,
         AdminBatchPage,
-        AdminsPageBody
+        AdminsPageBody,
+        AdminLoginPage
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -62,12 +77,13 @@ const routes: Routes = [
         PaginatorModule,
         MatInputModule,
         ReactiveFormsModule,
+        HttpClientModule
     ],
     exports: [
         AdminSidebarComponent
     ],
     providers: [
-        DatePipe
+        DatePipe,
     ]
 })
 export class AdminModules {}

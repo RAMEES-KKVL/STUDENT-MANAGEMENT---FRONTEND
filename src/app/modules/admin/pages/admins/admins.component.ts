@@ -1,8 +1,9 @@
 import { DatePipe } from "@angular/common";
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, Input, OnInit, QueryList, Renderer2, ViewChildren } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { adminInterface } from "src/app/models/admin.interface";
 import { AdminService } from "src/app/services/admin.service";
+import { PermissionSharedService } from "src/app/services/adminPermission.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -11,6 +12,8 @@ import Swal from "sweetalert2";
 })
 export class AdminsPageBody implements OnInit {
     showPopup: boolean = false
+    @Input() permissions: any 
+    adminPermissions: any
 
     accessArray: Array<string> = [
         "View", "Add", "Edit", "Delete" 
@@ -24,7 +27,7 @@ export class AdminsPageBody implements OnInit {
     
     // Creating form
     addAdmins!: FormGroup
-    constructor(private renderer: Renderer2, private datePipe: DatePipe, private adminService: AdminService, private fb: FormBuilder) {
+    constructor(private renderer: Renderer2, private datePipe: DatePipe, private adminService: AdminService, private fb: FormBuilder, private sharedAdminPermissions: PermissionSharedService) {
         this.addAdmins = this.fb.group({
             fullName:["", Validators.required],
             email:["", [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
@@ -75,13 +78,21 @@ export class AdminsPageBody implements OnInit {
                         createdAt: this.getFormattedDate(admin.createdAt),
                         updatedAt: this.getFormattedDate(admin.updatedAt),
                     }))
-                    this.updatePaginatedAdmins()
+                    this.updatePaginatedAdmins()                                      
                 }
             },
             error: ( response: any ) => {
                 // Handling error responses
             }
         })
+
+        this.sharedAdminPermissions.data$.subscribe( permission => {
+            this.adminPermissions = permission
+            console.log(this.adminPermissions);
+            
+        })
+
+
     }
 
     getFormattedDate(timestamp: number | Date): string | null {

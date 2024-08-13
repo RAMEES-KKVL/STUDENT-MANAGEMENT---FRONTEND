@@ -46,3 +46,14 @@ homeBanner.component.html
 homeBanner.component.ts
 
 /src/app/home/pages/landing-home
+
+/src/app/modules/admin/pages/admin-login
+
+adminAuthGuard.service.ts
+adminAuthInterceptor.service.ts
+adminPermission.service.ts
+role.service.ts
+routeGuard.service.ts
+
+/src/app/modules/students/pages/menu-page
+/src/app/modules/students/pages/student-pages

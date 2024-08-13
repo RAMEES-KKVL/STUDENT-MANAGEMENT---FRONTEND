@@ -1,7 +1,7 @@
 <div class="w-full h-full overflow-auto">
     <div class="w-full h-[4rem] px-5 flex items-center justify-between">
         <div class="text-xl">COURSES</div>
-        <button (click)="togglePopup()" class="bg-slate-300 rounded-lg px-5 py-1.5 hover:bg-slate-400 transition active:scale-95 ease-in-out">
+        <button (click)="togglePopup()" *ngIf="adminPermissions[0].add" class="bg-slate-300 rounded-lg px-5 py-1.5 hover:bg-slate-400 transition active:scale-95 ease-in-out">
             <i class="fa-solid fa-plus"></i>
         </button>
     </div>

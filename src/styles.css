@@ -32,6 +32,13 @@ input[type="number"]::-webkit-inner-spin-button {
   overflow: auto;
   text-overflow: ellipsis;
 }
+.singleLineBreak {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Number of lines to show */
+  -webkit-box-orient: horizontal;
+  overflow: auto;
+  text-overflow: ellipsis;
+}
 
 .pageactive {
   background-color: #d1d5db; /* Example active color */

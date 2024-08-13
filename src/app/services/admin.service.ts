@@ -8,6 +8,14 @@ import { Environment } from "../environment/environment";
 export class AdminService {
     constructor(private http: HttpClient){}
 
+    login(data : object){
+        return this.http.post(`${Environment.url}/admin/login`, data)
+    }
+
+    getAdminInfo(){
+        return this.http.get(`${Environment.url}/admin/info`)
+    }
+
     getCourses(){
         return this.http.get(`${Environment.url}/admin/courses`)
     }

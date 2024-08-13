@@ -1,18 +1,18 @@
-<div class="w-[20rem] h-[22rem] rounded-[1rem] border border-gray-300 shadow-sm flex flex-col items-center hover:shadow-xl active:scale-95 transition ease-in-out">
+<div *ngFor="let course of courseList" class="w-[17rem] h-[20rem] rounded-[1rem] border border-gray-300 shadow-sm flex flex-col items-center hover:shadow-xl active:scale-95 transition ease-in-out">
     <div class="w-[92%] h-[50%] bg-slate-500 mt-[10px] rounded-[.7rem]">
         <img src="/assets/images/EduSync-logo.png" alt="" class="w-full h-full">
     </div>
     <div class="w-[92%] h-[44%] flex flex-col gap-3 mt-5">
         <div class="text-[1.5rem]">
             <!-- <b> -->
-                Beginner's Guide to Design
+                {{ course. courseName }}
             <!-- </b> -->
         </div>
         <div>
-            By Ronald Richards
+            {{ course. description }}
         </div>
         <div>
-            22 Total Hours. 155 Lectures. Beginner
+            Total of {{ course. duration }} {{ course. durationUnit }}.
         </div>
     </div>
 </div> 

@@ -16,6 +16,8 @@ import { HomeBannerComponent } from './home/components/home-banner/homeBanner.co
 import { CourseComponent } from './home/components/courses/courses.component';
 import { InstructorsComponent } from './home/components/instructors/instructors.component';
 import { LandingHomePage } from './home/pages/landing-home/landinghome.component';
+import { LoggedRole } from './services/role.service';
+import { AdminModules } from './modules/admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -33,17 +35,18 @@ import { LandingHomePage } from './home/pages/landing-home/landinghome.component
     MatInputModule,
     MatFormFieldModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    AdminModules,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    LoggedRole
   ],
   bootstrap: [AppComponent],
   exports: [RouterModule]
 })
 export class AppModule { }
- 

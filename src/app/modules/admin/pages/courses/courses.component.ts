@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { courseInterface } from "src/app/models/course.interface";
 import { courseDurationUnit } from "src/app/models/duration";
 import { AdminService } from "src/app/services/admin.service";
+import { PermissionSharedService } from "src/app/services/adminPermission.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -20,15 +21,22 @@ export class AdminCoursePage implements OnInit {
         { value: 'Months', label: 'Months' },
     ];
 
-    constructor(private fb: FormBuilder, private adminService: AdminService, private datePipe: DatePipe, private route: Router){
+    constructor(private fb: FormBuilder, private adminService: AdminService, private datePipe: DatePipe, private route: Router, private sharedAdminPermissions: PermissionSharedService){
         this.courseCreationForm = this.fb.group({
             courseName: ["", Validators.required],
             description: ["", Validators.required],
             duration: ['', [Validators.required, Validators.min(1)]],
             durationUnit: ['', Validators.required],
         });
+
+        this.sharedAdminPermissions.data$.subscribe( permission => {
+            this.adminPermissions = [...permission].filter( item => item.url === "courses")
+        })
+
+        
     }
 
+    adminPermissions: any
     courseList: any[] = []
     ngOnInit(): void {
         this.adminService.getCourses().subscribe({
@@ -49,6 +57,9 @@ export class AdminCoursePage implements OnInit {
                 
             }
         })
+
+        console.log(this.adminPermissions);
+        
     }
 
     getFormattedDate(timestamp: number): string | null {

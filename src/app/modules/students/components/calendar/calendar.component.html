@@ -1,0 +1,36 @@
+
+<div class="w-auto h-auto border rounded-xl ">
+
+    <!-- HEADER PART -->
+    <div class="h-auto px-4 py-5 rounded-md w-full flex justify-between items-center bg-slate-200">
+        <button (click)="prevMonth()" class="py-1 px-4 hover:bg-slate-300 transition ease-in-out duration-150 rounded-2xl active:scale-95">
+            <i class="fa-solid fa-less-than"></i>
+        </button>
+        <div class="text-xl">{{ currentDate | date: 'MMMM yyyy' }}</div>
+        <!-- <input type="date" class="h" [(ngModel)]="currentDate"> -->
+        <button (click)="nextMonth()" class="py-1 px-4 hover:bg-slate-300 transition ease-in-out duration-150 rounded-2xl active:scale-95">
+            <i class="fa-solid fa-greater-than"></i>
+        </button>
+    </div>
+
+    <!-- BODY PART -->
+    <!-- <div class="flex justify-around w-full bg-slate-500 "> -->
+    <div class="grid grid-cols-7 gap-2 py-4 px-2 rounded-md">
+        <!-- DAYS OF THE WEEK -->
+        <div *ngFor="let day of calendarWeeks" class="text-center py-5 bg-slate-100 shadow-md">
+            <div>{{ day }}</div>
+        </div>
+
+        <!-- DAYS -->
+        <div *ngFor="let date of daysInMonth" class="text-center">
+            <div *ngIf="date" class="py-4 border rounded-xl">{{ date }}</div>
+            <div *ngIf="!date"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
