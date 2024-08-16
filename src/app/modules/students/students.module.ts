@@ -6,6 +6,7 @@ import { StudentHeaderComponent } from "./components/header/header.component";
 import { MenuPage } from "./pages/menu-page/menuPage.component";
 import { CalendarComponent } from "./components/calendar/calendar.component";
 import { StudentAttendancePage } from "./pages/attendance/attendance.component";
+import { StudentProfilePage } from "./pages/profile/studentProfile.component";
 
 const routes: Routes = [
     {
@@ -15,6 +16,10 @@ const routes: Routes = [
             {
                 path : "attendance",
                 component : StudentAttendancePage
+            },
+            {
+                path : "profile",
+                component : StudentProfilePage
             }
         ]
     }
@@ -26,10 +31,11 @@ const routes: Routes = [
         MenuPage,
         StudentAttendancePage,
         CalendarComponent,
+        StudentProfilePage
     ],
     imports: [
         RouterModule.forChild(routes),
-        CommonModule
+        CommonModule,
     ]
 })
 export class StudentsModules {}
